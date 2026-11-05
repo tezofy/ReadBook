@@ -1,0 +1,313 @@
+/* ==========================================================================
+   NOCTURNE — Cart Drawer + Supplementals
+   Appended module (kept separate so it can be dropped into the WordPress
+   child theme as its own asset).
+   ========================================================================== */
+
+.vl-cart-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  visibility: hidden;
+  pointer-events: none;
+}
+.vl-cart-drawer.is-open { visibility: visible; pointer-events: auto; }
+
+.vl-cart-drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5,4,6,.72);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  opacity: 0;
+  transition: opacity .45s var(--vl-ease);
+}
+.vl-cart-drawer.is-open .vl-cart-drawer__backdrop { opacity: 1; }
+
+.vl-cart-drawer__panel {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: min(92vw, 430px);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 28px;
+  background: var(--vl-ink-2);
+  border-left: 1px solid var(--vl-line-gold);
+  box-shadow: -30px 0 80px -30px rgba(0,0,0,.9);
+  transform: translateX(100%);
+  transition: transform .5s var(--vl-ease-out);
+  overflow-y: auto;
+}
+.vl-cart-drawer.is-open .vl-cart-drawer__panel { transform: none; }
+.vl-cart-drawer__panel:focus { outline: none; }
+.vl-cart-drawer__close:hover { color: var(--vl-oxblood-lt) !important; }
+
+/* --------------------------------------------------------------------------
+   PRODUCT GALLERY (single book page)
+   -------------------------------------------------------------------------- */
+.vl-gallery { display: grid; gap: 14px; }
+.vl-gallery__main {
+  position: relative;
+  border-radius: var(--vl-radius-lg);
+  overflow: hidden;
+  background: var(--vl-plum);
+  box-shadow: var(--vl-shadow-lg);
+  aspect-ratio: 2 / 3;
+}
+.vl-gallery__main img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: opacity .3s var(--vl-ease);
+}
+.vl-gallery__thumbs { display: flex; gap: 12px; }
+.vl-gallery__thumb {
+  width: 72px;
+  flex: none;
+  aspect-ratio: 2 / 3;
+  border: 1px solid var(--vl-line-2);
+  border-radius: var(--vl-radius);
+  overflow: hidden;
+  background: var(--vl-plum);
+  cursor: pointer;
+  padding: 0;
+  transition: border-color .3s var(--vl-ease), transform .3s var(--vl-ease);
+}
+.vl-gallery__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.vl-gallery__thumb:hover { transform: translateY(-3px); border-color: var(--vl-line-gold); }
+.vl-gallery__thumb.is-active { border-color: var(--vl-gold); }
+
+/* --------------------------------------------------------------------------
+   SINGLE BOOK — variation selector (mimics WooCommerce variations)
+   -------------------------------------------------------------------------- */
+.vl-variants { display: flex; flex-direction: column; gap: 12px; margin: 26px 0; }
+.vl-variant {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1px solid var(--vl-line);
+  border-radius: var(--vl-radius);
+  background: rgba(11,10,13,.4);
+  cursor: pointer;
+  transition: border-color .3s var(--vl-ease), background .3s var(--vl-ease);
+}
+.vl-variant:hover { border-color: var(--vl-line-gold); }
+.vl-variant.is-selected { border-color: var(--vl-gold); background: rgba(201,162,39,.07); }
+.vl-variant__name { display: flex; align-items: center; gap: 13px; }
+.vl-variant__radio {
+  width: 17px; height: 17px;
+  border-radius: 99px;
+  border: 1px solid var(--vl-muted-2);
+  display: grid;
+  place-items: center;
+  flex: none;
+  transition: border-color .3s var(--vl-ease);
+}
+.vl-variant.is-selected .vl-variant__radio { border-color: var(--vl-gold); }
+.vl-variant.is-selected .vl-variant__radio::after {
+  content: '';
+  width: 9px; height: 9px;
+  border-radius: 99px;
+  background: var(--vl-gold);
+}
+.vl-variant__label { font-size: .92rem; color: var(--vl-ivory); }
+.vl-variant__label small { display: block; font-size: .72rem; color: var(--vl-muted-2); margin-top: 3px; }
+.vl-variant__price { font-family: var(--vl-font-display); font-size: 1.15rem; color: var(--vl-gold); }
+
+/* --------------------------------------------------------------------------
+   BREADCRUMB
+   -------------------------------------------------------------------------- */
+.vl-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  font-size: .68rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--vl-muted-2);
+  margin-bottom: 30px;
+}
+.vl-crumbs a { color: var(--vl-muted); }
+.vl-crumbs a:hover { color: var(--vl-gold-lt); }
+.vl-crumbs span { opacity: .45; }
+
+/* --------------------------------------------------------------------------
+   BOOK META / DETAIL TABLE
+   -------------------------------------------------------------------------- */
+.vl-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 22px 0; }
+.vl-meta__item { font-size: .76rem; color: var(--vl-muted-2); }
+.vl-meta__item b {
+  display: block;
+  font-size: .6rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--vl-gold);
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   EXCERPT / READING SAMPLE
+   -------------------------------------------------------------------------- */
+.vl-excerpt {
+  position: relative;
+  padding: clamp(28px, 4vw, 48px);
+  border: 1px solid var(--vl-line);
+  border-left: 3px solid var(--vl-oxblood);
+  border-radius: var(--vl-radius);
+  background:
+    linear-gradient(135deg, rgba(30,25,34,.9), rgba(11,10,13,.6));
+  font-family: var(--vl-font-serif);
+  font-size: 1.14rem;
+  line-height: 1.85;
+  color: var(--vl-ivory-dim);
+}
+.vl-excerpt p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--vl-font-display);
+  font-size: 3.9rem;
+  line-height: .84;
+  padding: 6px 12px 0 0;
+  color: var(--vl-gold);
+}
+
+/* --------------------------------------------------------------------------
+   TRUST / BADGES ROW
+   -------------------------------------------------------------------------- */
+.vl-trust { display: flex; flex-wrap: wrap; gap: 18px 30px; margin: 26px 0; }
+.vl-trust__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .78rem;
+  color: var(--vl-muted);
+}
+.vl-trust__item svg { width: 16px; height: 16px; color: var(--vl-gold); flex: none; }
+
+/* --------------------------------------------------------------------------
+   TRUST PILLS
+   -------------------------------------------------------------------------- */
+.vl-pills { display: flex; flex-wrap: wrap; gap: 9px; }
+.vl-pill {
+  padding: 7px 15px;
+  border: 1px solid var(--vl-line);
+  border-radius: 99px;
+  font-size: .7rem;
+  color: var(--vl-muted);
+  background: rgba(11,10,13,.4);
+}
+
+/* --------------------------------------------------------------------------
+   STICKY ADD-TO-CART (mobile single-book page)
+   -------------------------------------------------------------------------- */
+.vl-sticky-buy {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 800;
+  display: none;
+  align-items: center;
+  gap: 16px;
+  padding: 14px var(--vl-gutter);
+  padding-bottom: calc(14px + env(safe-area-inset-bottom));
+  background: rgba(11,10,13,.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--vl-line-gold);
+  transform: translateY(120%);
+  transition: transform .4s var(--vl-ease);
+}
+.vl-sticky-buy.is-visible { transform: none; }
+.vl-sticky-buy__price { font-family: var(--vl-font-display); font-size: 1.24rem; color: var(--vl-ivory); }
+.vl-sticky-buy__price small { display: block; font-family: var(--vl-font-body); font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--vl-muted-2); }
+.vl-sticky-buy .vl-btn { margin-left: auto; }
+
+@media (max-width: 900px) {
+  .vl-sticky-buy { display: flex; }
+  body { padding-bottom: 78px; }
+}
+
+/* --------------------------------------------------------------------------
+   COOKIE CONSENT (GDPR)
+   -------------------------------------------------------------------------- */
+.vl-cookie {
+  position: fixed;
+  left: 18px; right: 18px; bottom: 18px;
+  z-index: 1100;
+  max-width: 460px;
+  padding: 22px 24px;
+  background: var(--vl-plum);
+  border: 1px solid var(--vl-line-gold);
+  border-radius: var(--vl-radius-lg);
+  box-shadow: var(--vl-shadow-lg);
+  transform: translateY(140%);
+  opacity: 0;
+  transition: transform .55s var(--vl-ease-out), opacity .4s var(--vl-ease);
+}
+.vl-cookie.is-visible { transform: none; opacity: 1; }
+.vl-cookie h4 { font-size: 1.05rem; margin-bottom: 8px; }
+.vl-cookie p { font-size: .84rem; color: var(--vl-muted); margin-bottom: 18px; }
+.vl-cookie__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* --------------------------------------------------------------------------
+   TOAST
+   -------------------------------------------------------------------------- */
+.vl-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  z-index: 1200;
+  transform: translate(-50%, 160%);
+  padding: 14px 26px;
+  background: var(--vl-oxblood);
+  border: 1px solid var(--vl-oxblood-lt);
+  border-radius: 99px;
+  color: #fff;
+  font-size: .82rem;
+  letter-spacing: .06em;
+  box-shadow: var(--vl-shadow);
+  transition: transform .5s var(--vl-ease-out);
+  max-width: calc(100vw - 40px);
+  text-align: center;
+}
+.vl-toast.is-visible { transform: translate(-50%, 0); }
+
+/* --------------------------------------------------------------------------
+   ARTICLE / BLOG POST BODY
+   -------------------------------------------------------------------------- */
+.vl-article { max-width: 720px; margin-inline: auto; }
+.vl-article h2 { margin-top: 2.2em; }
+.vl-article h3 { margin-top: 1.8em; }
+.vl-article p { font-size: 1.06rem; line-height: 1.85; }
+.vl-article blockquote {
+  margin: 2.4em 0;
+  padding: 4px 0 4px 26px;
+  border-left: 2px solid var(--vl-gold);
+  font-family: var(--vl-font-serif);
+  font-style: italic;
+  font-size: 1.24rem;
+  line-height: 1.6;
+  color: var(--vl-ivory);
+}
+.vl-article ul, .vl-article ol { color: var(--vl-ivory-dim); padding-left: 1.3em; margin-bottom: 1.2em; }
+.vl-article li { margin-bottom: .5em; }
+.vl-article__header { text-align: center; max-width: 760px; margin-inline: auto; margin-bottom: clamp(38px, 5vw, 60px); }
+.vl-article__header h1 { margin-bottom: 22px; }
+.vl-article__lead {
+  font-family: var(--vl-font-serif);
+  font-style: italic;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: var(--vl-muted);
+}
+.vl-article__cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: var(--vl-radius-lg); margin-bottom: clamp(32px, 4vw, 52px); box-shadow: var(--vl-shadow-lg); }
+.vl-share { display: flex; align-items: center; gap: 12px; justify-content: center; margin-top: clamp(40px, 5vw, 60px); padding-top: 32px; border-top: 1px solid var(--vl-line); }
+
+/* --------------------------------------------------------------------------
+   PRINT (bonus — nice for a book page)
+   -------------------------------------------------------------------------- */
+@media print {
+  .vl-header, .vl-footer, .vl-hero, .vl-sticky-buy, .vl-cart-drawer, .vl-cookie { display: none !important; }
+  body { background: #fff; color: #000; }
+}

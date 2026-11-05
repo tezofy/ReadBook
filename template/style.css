@@ -1,0 +1,19 @@
+/*
+Theme Name:   Nocturne
+Theme URI:    https://nocturnevane.com/
+Description:  A luxury editorial dark theme for dark-romance authors. Built on Kadence or GeneratePress as a child theme. Includes a full-bleed hero media slider with video support, cover-forward book cards, WooCommerce styling and a one-click demo content importer. Everything the author needs lives in the WordPress admin.
+Author:       Nocturne Studio
+Author URI:   https://nocturnevane.com/
+Template:     kadence
+Version:      1.0.0
+License:      GNU General Public License v2 or later
+License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:  nocturne
+Tags:         dark, custom-colors, custom-logo, custom-menu, featured-images, translation-ready, e-commerce, one-column, two-column, right-sidebar, blog, portfolio
+*/
+
+/* The parent theme supplies the layout. Nocturne's design system lives in
+   assets/css/nocturne.css and is enqueued from functions.php. This file
+   exists to declare the theme and to override the parent stylesheet. */
+
+.site-main { overflow: hidden; }
