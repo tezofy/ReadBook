@@ -5,23 +5,124 @@
   "settings": {
     "page_settings": [],
     "system": [
-      { "type": "doc", "settings": [] }
+      {
+        "type": "doc",
+        "settings": []
+      }
     ],
     "colors": [
-      { "id": "primary", "title": "Oxblood", "value": "#8A1F2E" },
-      { "id": "secondary", "title": "Antique Gold", "value": "#C9A227" },
-      { "id": "text", "title": "Ivory", "value": "#F4EFE6" },
-      { "id": "accent", "title": "Muted", "value": "#A79FB2" },
-      { "id": "background", "title": "Ink", "value": "#0B0A0D" },
-      { "id": "background_2", "title": "Charcoal", "value": "#17151B" },
-      { "id": "background_3", "title": "Plum", "value": "#1E1922" },
-      { "id": "border", "title": "Hairline", "value": "rgba(244,239,230,0.10)" }
+      {
+        "id": "primary",
+        "title": "Oxblood",
+        "value": "#6E1A2B"
+      },
+      {
+        "id": "secondary",
+        "title": "Antique Gold",
+        "value": "#C9A86A"
+      },
+      {
+        "id": "text",
+        "title": "Ivory",
+        "value": "#F2EDE3"
+      },
+      {
+        "id": "accent",
+        "title": "Muted",
+        "value": "#5A7A7A"
+      },
+      {
+        "id": "background",
+        "title": "Ink",
+        "value": "#0E0E10"
+      },
+      {
+        "id": "background_2",
+        "title": "Charcoal",
+        "value": "#1A0F12"
+      },
+      {
+        "id": "background_3",
+        "title": "Plum",
+        "value": "#3D0E18"
+      },
+      {
+        "id": "border",
+        "title": "Hairline",
+        "value": "rgba(244,239,230,0.10)"
+      }
     ],
     "typography": [
-      { "id": "primary", "title": "Display — Playfair Display", "value": { "font_family": "Playfair Display", "font_weight": "600", "font_size": { "unit": "px", "size": 56 }, "line_height": { "unit": "px", "size": 62 }, "letter_spacing": { "unit": "px", "size": -0.7 } } },
-      { "id": "secondary", "title": "Serif Italic — Cormorant Garamond", "value": { "font_family": "Cormorant Garamond", "font_weight": "500", "font_style": "italic", "font_size": { "unit": "px", "size": 26 }, "line_height": { "unit": "px", "size": 37 } } },
-      { "id": "text", "title": "Body — Inter", "value": { "font_family": "Inter", "font_weight": "400", "font_size": { "unit": "px", "size": 16.5 }, "line_height": { "unit": "px", "size": 29 } } },
-      { "id": "accent", "title": "Label — Inter Caps", "value": { "font_family": "Inter", "font_weight": "600", "font_size": { "unit": "px", "size": 11 }, "letter_spacing": { "unit": "px", "size": 3.4 }, "text_transform": "uppercase" } }
+      {
+        "id": "primary",
+        "title": "Display — Cormorant Garamond",
+        "value": {
+          "font_family": "Cormorant Garamond",
+          "font_weight": "600",
+          "font_size": {
+            "unit": "px",
+            "size": 56
+          },
+          "line_height": {
+            "unit": "px",
+            "size": 62
+          },
+          "letter_spacing": {
+            "unit": "px",
+            "size": -0.7
+          }
+        }
+      },
+      {
+        "id": "secondary",
+        "title": "Quote — Cormorant Garamond Italic",
+        "value": {
+          "font_family": "Cormorant Garamond",
+          "font_weight": "500",
+          "font_style": "italic",
+          "font_size": {
+            "unit": "px",
+            "size": 26
+          },
+          "line_height": {
+            "unit": "px",
+            "size": 37
+          }
+        }
+      },
+      {
+        "id": "text",
+        "title": "Body — Lora",
+        "value": {
+          "font_family": "Lora",
+          "font_weight": "400",
+          "font_size": {
+            "unit": "px",
+            "size": 16.5
+          },
+          "line_height": {
+            "unit": "px",
+            "size": 29
+          }
+        }
+      },
+      {
+        "id": "accent",
+        "title": "Label — Inter Caps",
+        "value": {
+          "font_family": "Inter",
+          "font_weight": "600",
+          "font_size": {
+            "unit": "px",
+            "size": 11
+          },
+          "letter_spacing": {
+            "unit": "px",
+            "size": 3.4
+          },
+          "text_transform": "uppercase"
+        }
+      }
     ]
   },
   "widgets": {
@@ -32,8 +133,14 @@
       "settings": {
         "slides": [
           {
-            "image": { "url": "REPLACE_WITH_YOUR_UPLOADED_IMAGE_URL", "id": 0 },
-            "video": { "url": "REPLACE_WITH_YOUR_UPLOADED_MP4_URL", "id": 0 },
+            "image": {
+              "url": "REPLACE_WITH_YOUR_UPLOADED_IMAGE_URL",
+              "id": 0
+            },
+            "video": {
+              "url": "REPLACE_WITH_YOUR_UPLOADED_MP4_URL",
+              "id": 0
+            },
             "kicker": "New Release — Book One",
             "title": "Velvet <em>Vow</em>",
             "excerpt": "He bought the auction house to get one painting. He kept it to get her. Some men ruin women gently. Elias March does not do anything gently.",
@@ -42,8 +149,14 @@
             "_note": "Leave video.url empty for a still image slide. Keep image.url for the poster frame."
           },
           {
-            "image": { "url": "REPLACE_WITH_YOUR_UPLOADED_IMAGE_URL", "id": 0 },
-            "video": { "url": "", "id": 0 },
+            "image": {
+              "url": "REPLACE_WITH_YOUR_UPLOADED_IMAGE_URL",
+              "id": 0
+            },
+            "video": {
+              "url": "",
+              "id": 0
+            },
             "kicker": "The Ashgate Series · Book Two",
             "title": "The Hollow <em>Church</em>",
             "excerpt": "The bell only rings for the dead. On the seventh night, it rang for her.",
@@ -52,8 +165,14 @@
             "_note": "Video field empty = still image slide."
           },
           {
-            "image": { "url": "REPLACE_WITH_YOUR_UPLOADED_IMAGE_URL", "id": 0 },
-            "video": { "url": "", "id": 0 },
+            "image": {
+              "url": "REPLACE_WITH_YOUR_UPLOADED_IMAGE_URL",
+              "id": 0
+            },
+            "video": {
+              "url": "",
+              "id": 0
+            },
             "kicker": "Limited Edition Paperback",
             "title": "Obsession <em>in Ink</em>",
             "excerpt": "Hand-bound, gilded edges, numbered to three hundred. Signed by the author.",
@@ -79,19 +198,62 @@
     },
     "button_styles": {
       "primary": {
-        "background_color": "#8A1F2E",
+        "background_color": "#6E1A2B",
         "color": "#FBF6EE",
         "border_radius": "2px",
-        "padding": { "unit": "px", "top": "15", "right": "34", "bottom": "15", "left": "34" },
-        "typography": { "font_family": "Inter", "font_weight": "600", "font_size": { "unit": "px", "size": 12 }, "letter_spacing": { "unit": "px", "size": 2.4 }, "text_transform": "uppercase" }
+        "padding": {
+          "unit": "px",
+          "top": "15",
+          "right": "34",
+          "bottom": "15",
+          "left": "34"
+        },
+        "typography": {
+          "font_family": "Inter",
+          "font_weight": "600",
+          "font_size": {
+            "unit": "px",
+            "size": 12
+          },
+          "letter_spacing": {
+            "unit": "px",
+            "size": 2.4
+          },
+          "text_transform": "uppercase"
+        }
       },
       "ghost": {
         "background_color": "transparent",
-        "color": "#F4EFE6",
-        "border": { "border_type": "solid", "width": { "unit": "px", "size": 1 }, "color": "rgba(201,162,39,0.28)" },
+        "color": "#F2EDE3",
+        "border": {
+          "border_type": "solid",
+          "width": {
+            "unit": "px",
+            "size": 1
+          },
+          "color": "rgba(201,162,39,0.28)"
+        },
         "border_radius": "2px",
-        "padding": { "unit": "px", "top": "15", "right": "34", "bottom": "15", "left": "34" },
-        "typography": { "font_family": "Inter", "font_weight": "600", "font_size": { "unit": "px", "size": 12 }, "letter_spacing": { "unit": "px", "size": 2.4 }, "text_transform": "uppercase" }
+        "padding": {
+          "unit": "px",
+          "top": "15",
+          "right": "34",
+          "bottom": "15",
+          "left": "34"
+        },
+        "typography": {
+          "font_family": "Inter",
+          "font_weight": "600",
+          "font_size": {
+            "unit": "px",
+            "size": 12
+          },
+          "letter_spacing": {
+            "unit": "px",
+            "size": 2.4
+          },
+          "text_transform": "uppercase"
+        }
       }
     }
   }

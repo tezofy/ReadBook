@@ -5,11 +5,17 @@ and NO horizontal scrollbar.
 
 Run:  python3 test_bleed.py
 """
-import sys, os
+import sys, os, tempfile
 from playwright.sync_api import sync_playwright
 
 BASE = os.environ.get("NOCTURNE_BASE", "http://localhost:8080")
-OUT = os.environ.get("NOCTURNE_OUT", "/home/user/veloria-public/docs/screenshots")
+# Write QA artefacts outside the repo by default so a test run never
+# leaves multi-megabyte PNGs behind in docs/screenshots.
+OUT = os.environ.get(
+    "NOCTURNE_OUT",
+    os.path.join(tempfile.gettempdir(), "nocturne-qa"),
+)
+os.makedirs(OUT, exist_ok=True)
 
 VIEWPORTS = [
     ("mobile-375",  375,  812,  True),
@@ -131,7 +137,9 @@ with sync_playwright() as p:
             fails.append((name, e))
 
         page.screenshot(path=f"{OUT}/shot-{name}.png", full_page=False)
-        page.screenshot(path=f"{OUT}/full-{name}.png", full_page=True)
+        # A full-page capture of the whole landing page exceeds Chromium's
+        # texture limit now that the page carries several extra sections.
+        # The viewport shot above is the artefact this test needs.
         ctx.close()
 
     # Book page smoke test
@@ -155,7 +163,6 @@ with sync_playwright() as p:
             print(f"       ✗ {b}")
             fails.append((name, b))
         page.screenshot(path=f"{OUT}/book-{name}.png", full_page=False)
-        page.screenshot(path=f"{OUT}/bookfull-{name}.png", full_page=True)
         ctx.close()
 
     browser.close()

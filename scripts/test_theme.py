@@ -5,11 +5,17 @@ contrast, form validation, navigation, and screenshots for every page.
 
 Run:  python3 test_full_qa.py
 """
-import sys, os, json
+import sys, os, json, tempfile
 from playwright.sync_api import sync_playwright
 
 BASE = os.environ.get("NOCTURNE_BASE", "http://localhost:8080")
-OUT = os.environ.get("NOCTURNE_OUT", "/home/user/veloria-public/docs/screenshots")
+# Write QA artefacts outside the repo by default so a test run never
+# leaves multi-megabyte PNGs behind in docs/screenshots.
+OUT = os.environ.get(
+    "NOCTURNE_OUT",
+    os.path.join(tempfile.gettempdir(), "nocturne-qa"),
+)
+os.makedirs(OUT, exist_ok=True)
 
 PAGES = ["index.html", "book.html", "shop.html"]
 VIEWPORTS = [("mobile", 375, 812, True), ("tablet", 768, 1024, True), ("desktop", 1440, 900, False)]
@@ -96,6 +102,14 @@ def check_page(page, page_name, w, h, is_mobile):
                 // Inactive slider slides live off-stage to the right
                 if (el.closest('.vl-slide:not(.is-active)')) return;
                 if (el.closest('.vl-hero__track')) return;
+                // The product rail is a horizontal scroller: cards beyond the
+                // fold are meant to sit outside the viewport until you
+                // scroll the rail.
+                if (el.closest('.vl-rail__track')) return;
+                if (el.closest('.vl-split-hero__slide:not(.is-active)')) return;
+                // The ticker is a marquee — its content always runs past
+                // the right edge by design.
+                if (el.closest('.vl-ticker')) return;
                 bad.push(el.className && typeof el.className === 'string'
                     ? el.className.slice(0,40) : el.tagName);
             }

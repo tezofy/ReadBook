@@ -1,0 +1,1316 @@
+/* ==========================================================================
+   NOCTURNE — PARCHMENT THEME
+   --------------------------------------------------------------------------
+   A light, editorial skin drawn from the client reference: aged parchment
+   paper, a wine-red accent, muted teal and antique gold. Serif body copy,
+   Cormorant display headings, Inter for the interface.
+
+   This file sits after nocturne.css and re-maps the existing --vl-* tokens,
+   so every component inherits the new palette without being rewritten.
+
+   Palette
+     ink       #0E0E10   near-black text
+     parchment #F2EDE3   the page itself
+     copper    #5A7A7A   muted teal — rules, borders, quiet accents
+     rose      #8B4A5C   dusty rose
+     blood     #8B3A2F   rust red — the primary accent
+     gold      #C9A86A   antique gold
+     frost     #EBF5FB   ice blue
+     muted     #3D5A5E   deep teal for secondary text
+   ========================================================================== */
+
+:root {
+  /* -- Core surfaces -- */
+  --vl-ink:        #0E0E10;
+  --vl-ink-2:      #1A1A1D;
+  --vl-charcoal:   #24242A;
+  --vl-plum:       #2A0A14;
+  --vl-plum-2:     #3D0E18;
+  --vl-ash:        #EDE3D3;
+
+  /* -- The paper -- */
+  --vl-paper:      #F2EDE3;
+  --vl-paper-2:    #F5F1E8;
+  /* Text that always sits on a dark surface (hero, footer, quote band).
+     Unlike --vl-paper this token does NOT flip in dark mode. */
+  --vl-on-dark:    #F2EDE3;
+  --vl-paper-3:    #D8C4A8;
+
+  /* -- Ink on paper -- */
+  --vl-ivory:      #0E0E10;
+  --vl-ivory-dim:  #3D3329;
+  --vl-muted:      #3D5A5E;
+  --vl-muted-2:    #8B7355;
+
+  /* -- Accents -- */
+  --vl-oxblood:    #6E1A2B;
+  --vl-oxblood-lt: #8B3A2F;
+  --vl-oxblood-dk: #4A0E1C;
+  --vl-teal:        #5A7A7A;
+  --vl-teal-dk:     #3D5A5E;
+  --vl-rose:        #8B4A5C;
+  --vl-gold:        #C9A86A;
+  --vl-gold-lt:     #D8C4A8;
+  --vl-gold-dk:     #8B7355;
+  --vl-frost:       #EBF5FB;
+
+  /* -- Lines & shadows -- */
+  --vl-line:       rgba(90, 122, 122, 0.30);
+  --vl-line-2:     rgba(90, 122, 122, 0.16);
+  --vl-line-gold:  rgba(201, 168, 106, 0.55);
+  --vl-shadow-sm:  0 2px 10px rgba(60, 48, 38, .10);
+  --vl-shadow:     0 18px 44px -18px rgba(60, 48, 38, .30);
+  --vl-shadow-lg:  0 44px 90px -30px rgba(60, 48, 38, .38);
+  --vl-shadow-gold:0 0 0 1px var(--vl-line-gold), 0 26px 60px -24px rgba(201,168,106,.32);
+
+  /* -- Typography -- */
+  --vl-font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --vl-font-body:    'Lora', Georgia, 'Times New Roman', serif;
+  --vl-font-serif:   'Cormorant Garamond', Georgia, serif;
+  --vl-font-ui:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --vl-font-script:  'Great Vibes', 'Cormorant Garamond', cursive;
+}
+
+/* --------------------------------------------------------------------------
+   THE PAGE
+   -------------------------------------------------------------------------- */
+body {
+  background: var(--vl-paper);
+  color: var(--vl-ink);
+  font-family: var(--vl-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The grain sits on the paper, not in the dark. */
+body::before {
+  opacity: .04;
+  mix-blend-mode: multiply;
+}
+
+/* A whisper of warmth at the top of the page. */
+body::after {
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 0%, rgba(216,196,168,.34), transparent 68%),
+    radial-gradient(ellipse 90% 50% at 50% 100%, rgba(110,26,43,.05), transparent 70%);
+}
+
+/* --------------------------------------------------------------------------
+   HEADINGS — Cormorant, light, generous
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5,
+.vl-slide__title,
+.vl-book__title,
+.vl-sect-head h2,
+.vl-footer__title,
+.vl-btn {
+  font-family: var(--vl-font-display);
+  font-weight: 400;
+  letter-spacing: .01em;
+}
+
+.vl-slide__title em,
+.vl-serif-accent {
+  font-family: var(--vl-font-script);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: .01em;
+}
+
+.vl-sect-head h2 {
+  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+  line-height: 1.14;
+}
+
+/* The little eyebrow above every heading */
+.vl-eyebrow {
+  color: var(--vl-gold-dk);
+  letter-spacing: .34em;
+  font-family: var(--vl-font-ui);
+  font-size: .58rem;
+  font-weight: 500;
+}
+
+.vl-eyebrow i {
+  background: var(--vl-oxblood);
+}
+
+/* --------------------------------------------------------------------------
+   BODY COPY
+   -------------------------------------------------------------------------- */
+p, li, .vl-lede, .vl-book__blurb, .vl-feature p {
+  font-family: var(--vl-font-body);
+  color: var(--vl-ivory-dim);
+}
+
+.vl-lede {
+  color: var(--vl-muted);
+  font-size: 1.05rem;
+  line-height: 1.82;
+}
+
+/* --------------------------------------------------------------------------
+   BUTTONS — the reference uses a solid wine rectangle with wide tracking
+   -------------------------------------------------------------------------- */
+.vl-btn {
+  font-family: var(--vl-font-ui);
+  font-weight: 500;
+  letter-spacing: .22em;
+  border-radius: 0;
+  border-width: 1px;
+}
+
+.vl-btn--primary,
+.vl-btn:not(.vl-btn--ghost):not(.vl-btn--outline) {
+  background: var(--vl-oxblood);
+  border-color: var(--vl-oxblood);
+  color: var(--vl-paper);
+}
+
+.vl-btn--primary:hover,
+.vl-btn:not(.vl-btn--ghost):not(.vl-btn--outline):hover {
+  background: var(--vl-teal);
+  border-color: var(--vl-teal);
+  color: var(--vl-paper);
+  transform: none;
+  box-shadow: var(--vl-shadow);
+}
+
+.vl-btn--ghost {
+  border-color: var(--vl-line-gold);
+  color: var(--vl-ink);
+  background: transparent;
+}
+
+.vl-btn--ghost:hover {
+  background: var(--vl-ink);
+  border-color: var(--vl-ink);
+  color: var(--vl-paper);
+}
+
+/* --------------------------------------------------------------------------
+   HEADER — cream bar with a hairline rule
+   -------------------------------------------------------------------------- */
+/* The client's identity: a deep red-burgundy bar with the gold
+   monogram crest sitting above it. */
+.vl-header {
+  background: #4A0E1C;
+  border-bottom: 1px solid rgba(201,168,106,.28);
+  box-shadow: 0 2px 26px rgba(42,9,16,.34);
+  padding-top: 74px;
+}
+
+.vl-header.is-stuck {
+  background: #3D0E18;
+  border-bottom-color: rgba(201,168,106,.34);
+  box-shadow: 0 10px 34px rgba(42,9,16,.42);
+}
+
+.vl-brand {
+  position: relative;
+  padding-left: 104px;
+  min-height: 74px;
+  flex: none;
+}
+
+.vl-brand__logo { display: none; }
+
+/* The client's crest, lifted above the bar. */
+.vl-brand__crest {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 96px;
+  height: 92px;
+  pointer-events: none;
+  z-index: 2;
+}
+.vl-brand__crest img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 6px 16px rgba(42,9,16,.55));
+}
+
+.vl-brand__name {
+  font-family: var(--vl-font-display);
+  font-weight: 500;
+  letter-spacing: .11em;
+  font-size: 1.22rem;
+  color: var(--vl-paper);
+  white-space: nowrap;
+}
+
+.vl-brand__tag {
+  color: var(--vl-gold);
+  letter-spacing: .16em;
+  white-space: nowrap;
+}
+
+/* Mobile: the brand lockup shrinks so the burger and cart stay reachable. */
+@media (max-width: 768px) {
+  .vl-header { padding-top: 62px; }
+  .vl-brand { padding-left: 72px; min-height: 62px; }
+  .vl-brand__crest { width: 66px; height: 62px; }
+  .vl-brand__name { font-size: .82rem; letter-spacing: .05em; }
+  .vl-brand__tag { display: none; }
+}
+
+
+.vl-brand__logo {
+  border-color: var(--vl-line-gold);
+  background: radial-gradient(circle at 30% 25%, rgba(110,26,43,.16), transparent 70%);
+}
+
+.vl-nav__link {
+  color: rgba(242,237,227,.86);
+  letter-spacing: .18em;
+}
+
+.vl-nav__link:hover,
+.vl-nav__link.is-active {
+  background: rgba(201,168,106,.16);
+  color: var(--vl-gold);
+}
+
+.vl-nav__link::after {
+  background: var(--vl-gold);
+}
+
+.vl-header__badge {
+  border-color: rgba(201,168,106,.42);
+  background: rgba(201,168,106,.08);
+  color: rgba(242,237,227,.88);
+  flex: none;
+}
+/* The badge carries only an icon, so it reads as a square button. */
+.vl-header__badge:has(.vl-sr) {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.vl-header__badge:hover {
+  background: var(--vl-gold);
+  border-color: var(--vl-gold);
+  color: #3D0E18;
+}
+
+.vl-search input {
+  border-color: rgba(201,168,106,.36);
+  background: rgba(255,255,255,.08);
+  color: var(--vl-paper);
+}
+
+.vl-search input::placeholder { color: rgba(242,237,227,.5); }
+.vl-search input:focus {
+  border-color: var(--vl-gold);
+  background: rgba(255,255,255,.14);
+}
+
+.vl-search__icon { color: var(--vl-gold); }
+
+.vl-cart {
+  border-color: rgba(201,168,106,.42);
+  background: rgba(201,168,106,.08);
+  color: var(--vl-paper);
+}
+
+.vl-cart:hover {
+  background: var(--vl-gold);
+  border-color: var(--vl-gold);
+  color: #3D0E18;
+}
+
+.vl-cart__count { background: #8B1E32; color: #F2EDE3; }
+
+.vl-burger {
+  border-color: rgba(201,168,106,.42);
+}
+
+.vl-burger span { background: var(--vl-paper); }
+
+/* The dropdown panels */
+.vl-nav ul {
+  background: var(--vl-paper-2);
+  border-color: var(--vl-line);
+  box-shadow: var(--vl-shadow);
+}
+
+.vl-nav ul li a { color: var(--vl-muted); }
+.vl-nav ul li a:hover {
+  color: var(--vl-oxblood);
+  background: rgba(90,122,122,.12);
+}
+
+/* --------------------------------------------------------------------------
+   SECTIONS
+   -------------------------------------------------------------------------- */
+.vl-section { background: var(--vl-paper); }
+.vl-section--alt,
+.vl-section--paper {
+  background: var(--vl-paper-2);
+}
+
+.vl-section--dark {
+  background: var(--vl-ink);
+}
+
+.vl-section--dark p,
+.vl-section--dark .vl-lede { color: rgba(242,237,227,.72); }
+
+.vl-section--dark h2,
+.vl-section--dark h3,
+.vl-section--dark .vl-sect-head h2 { color: var(--vl-paper); }
+
+/* The pull quote */
+/* The reference sets its pull quote inside a band of deep wine. */
+.vl-quote {
+  background: var(--vl-oxblood-dk);
+  border-color: var(--vl-line-gold);
+}
+
+.vl-quote blockquote,
+.vl-quote__text,
+.vl-display-quote {
+  color: var(--vl-paper-2);
+  font-family: var(--vl-font-serif);
+  font-style: italic;
+}
+
+.vl-display-quote::before,
+.vl-display-quote::after { color: var(--vl-gold); }
+
+/* The feature strip */
+.vl-feature__icon { color: var(--vl-oxblood); }
+.vl-feature__title { color: var(--vl-ink); }
+
+/* --------------------------------------------------------------------------
+   CARDS
+   -------------------------------------------------------------------------- */
+.vl-book,
+.vl-post,
+.vl-card {
+  background: var(--vl-paper-2);
+  border-color: var(--vl-line-2);
+  box-shadow: var(--vl-shadow-sm);
+}
+
+.vl-book:hover,
+.vl-post:hover {
+  border-color: var(--vl-line-gold);
+  box-shadow: var(--vl-shadow);
+}
+
+.vl-book__title a,
+.vl-post__title a { color: var(--vl-ink); }
+.vl-book__title a:hover,
+.vl-post__title a:hover { color: var(--vl-oxblood); }
+
+.vl-book__series,
+.vl-post__meta {
+  color: var(--vl-gold-dk);
+  font-family: var(--vl-font-ui);
+  letter-spacing: .2em;
+}
+
+.vl-book__price {
+  color: var(--vl-oxblood);
+  font-family: var(--vl-font-display);
+}
+
+.vl-badge {
+  background: var(--vl-ink);
+  color: var(--vl-paper);
+}
+
+.vl-badge--new { background: var(--vl-oxblood); }
+
+/* --------------------------------------------------------------------------
+   THE RAIL — the cards need a light surface to sit on
+   -------------------------------------------------------------------------- */
+.vl-product__stage {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 58%, rgba(216,196,168,.55), transparent 70%),
+    var(--vl-paper-2);
+}
+
+.vl-product__glow {
+  background: radial-gradient(ellipse at center, rgba(201,168,106,.30), transparent 70%);
+}
+
+.vl-rail__btn {
+  background: rgba(242,237,227,.85);
+  border-color: var(--vl-line-gold);
+  color: var(--vl-ink);
+}
+
+.vl-rail__btn:hover {
+  background: var(--vl-oxblood);
+  border-color: var(--vl-oxblood);
+  color: var(--vl-paper);
+}
+
+/* The page block on the 3D book is white paper on a cream page */
+.vl-3d-book__pages {
+  background: linear-gradient(90deg,
+    #ffffff 0%, #f3efe6 6%, #ffffff 12%, #f3efe6 18%,
+    #ffffff 24%, #f3efe6 30%, #ffffff 36%, #f3efe6 42%,
+    #ffffff 48%, #f3efe6 54%, #ffffff 60%, #f3efe6 66%,
+    #ffffff 72%, #f3efe6 78%, #ffffff 84%, #f3efe6 90%,
+    #ffffff 96%, #f3efe6 100%);
+}
+
+/* --------------------------------------------------------------------------
+   THE SPLIT HERO — the cover panel becomes a warm paper card
+   -------------------------------------------------------------------------- */
+.vl-split-hero { background: var(--vl-paper); }
+
+.vl-split-hero__cover {
+  background: linear-gradient(160deg, var(--vl-paper-2), var(--vl-ash));
+  border-right-color: var(--vl-line);
+}
+
+.vl-split-hero__cover::after {
+  background: radial-gradient(ellipse at 50% 55%, rgba(110,26,43,.12), transparent 62%);
+}
+
+.vl-split-hero__media::after {
+  background: linear-gradient(90deg, rgba(242,237,227,.40) 0%, transparent 34%);
+}
+
+/* --------------------------------------------------------------------------
+   THE HERO SLIDER — the scrim lightens because the page is light
+   -------------------------------------------------------------------------- */
+.vl-slide__scrim {
+  background:
+    linear-gradient(90deg, rgba(14,14,16,.74) 0%, rgba(14,14,16,.42) 46%, rgba(14,14,16,.12) 100%),
+    linear-gradient(0deg, rgba(14,14,16,.50), transparent 42%);
+}
+
+.vl-slide__title { color: var(--vl-paper); }
+.vl-slide__excerpt { color: rgba(242,237,227,.82); }
+
+.vl-slide__kicker {
+  border-color: var(--vl-line-gold);
+  background: rgba(110,26,43,.86);
+  color: var(--vl-paper);
+}
+
+/* The progress dots */
+.vl-hero__dot { background: rgba(242,237,227,.34); }
+.vl-hero__dot.is-active { background: var(--vl-paper); }
+
+/* The scroll hint */
+.vl-scroll {
+  color: var(--vl-paper);
+}
+
+/* --------------------------------------------------------------------------
+   FORMS
+   -------------------------------------------------------------------------- */
+.vl-field input,
+.vl-field textarea,
+.vl-field select,
+.vl-news__form input {
+  background: rgba(255,255,255,.55);
+  border-color: var(--vl-line);
+  color: var(--vl-ink);
+}
+
+.vl-field input::placeholder,
+.vl-news__form input::placeholder { color: var(--vl-muted-2); }
+
+.vl-field input:focus,
+.vl-field textarea:focus,
+.vl-news__form input:focus {
+  border-color: var(--vl-teal);
+  background: #fff;
+  outline: none;
+}
+
+.vl-field label {
+  color: var(--vl-muted);
+  font-family: var(--vl-font-ui);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-size: .62rem;
+}
+
+.vl-field__error { color: var(--vl-oxblood); }
+
+/* The newsletter band */
+.vl-news {
+  background: var(--vl-paper-2);
+  border-color: var(--vl-line);
+}
+
+.vl-news__title { color: var(--vl-ink); }
+
+/* --------------------------------------------------------------------------
+   THE FAQ
+   -------------------------------------------------------------------------- */
+.vl-faq__item {
+  border-color: var(--vl-line);
+  background: transparent;
+}
+
+.vl-faq__q { color: var(--vl-ink); }
+.vl-faq__q:hover { color: var(--vl-oxblood); }
+.vl-faq__a { color: var(--vl-muted); }
+
+.vl-faq__icon { color: var(--vl-oxblood); }
+
+/* --------------------------------------------------------------------------
+   THE COUNTER BAND
+   -------------------------------------------------------------------------- */
+.vl-counter {
+  background: var(--vl-ink);
+}
+
+.vl-counter b { color: var(--vl-gold); }
+.vl-counter span { color: rgba(242,237,227,.70); }
+
+/* --------------------------------------------------------------------------
+   FOOTER — the reference ends on a black bar
+   -------------------------------------------------------------------------- */
+.vl-footer {
+  background: #3D0E18;
+  color: var(--vl-paper-2);
+  border-top: 1px solid rgba(201,168,106,.26);
+}
+
+.vl-footer__title { color: var(--vl-paper); }
+
+.vl-footer a {
+  color: rgba(242,237,227,.70);
+}
+
+.vl-footer a:hover { color: var(--vl-gold); }
+
+.vl-footer__bottom {
+  border-top-color: rgba(242,237,227,.14);
+  color: rgba(242,237,227,.52);
+}
+
+.vl-social {
+  border-color: rgba(242,237,227,.22);
+  color: rgba(242,237,227,.82);
+}
+
+.vl-social:hover {
+  background: var(--vl-oxblood);
+  border-color: var(--vl-oxblood);
+  color: var(--vl-paper);
+}
+
+/* --------------------------------------------------------------------------
+   THE TICKER
+   -------------------------------------------------------------------------- */
+.vl-ticker {
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.vl-ticker__item {
+  font-family: var(--vl-font-display);
+  color: var(--vl-ink);
+}
+
+.vl-ticker__item::before { color: var(--vl-oxblood); }
+
+/* The band the ticker sits on */
+[style*="border-block:1px solid var(--vl-line)"] {
+  background: var(--vl-paper-2) !important;
+}
+
+/* --------------------------------------------------------------------------
+   THE CART DRAWER
+   -------------------------------------------------------------------------- */
+.vl-cart-drawer__panel {
+  background: var(--vl-paper-2);
+  color: var(--vl-ink);
+}
+
+.vl-cart-drawer__title { color: var(--vl-ink); }
+.vl-cart-drawer__item { border-bottom-color: var(--vl-line-2); }
+.vl-cart-drawer__price { color: var(--vl-oxblood); }
+
+/* --------------------------------------------------------------------------
+   THE PRODUCT PAGE
+   -------------------------------------------------------------------------- */
+.vl-gallery__main {
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(216,196,168,.40), transparent 68%),
+    var(--vl-paper-2);
+  box-shadow: var(--vl-shadow);
+}
+
+.vl-gallery__thumb {
+  border-color: var(--vl-line-2);
+}
+
+.vl-gallery__thumb.is-active { border-color: var(--vl-oxblood); }
+
+.vl-buy__price {
+  color: var(--vl-oxblood);
+  font-family: var(--vl-font-display);
+}
+
+.vl-format__label {
+  color: var(--vl-muted);
+  font-family: var(--vl-font-ui);
+}
+
+.vl-format.is-active .vl-format__label { color: var(--vl-oxblood); }
+
+.vl-buy__note {
+  border-left-color: var(--vl-gold);
+  background: rgba(216,196,168,.24);
+  color: var(--vl-ivory-dim);
+}
+
+/* The drop-cap reading sample */
+.vl-sample { color: var(--vl-ivory-dim); }
+.vl-sample::first-letter { color: var(--vl-oxblood); }
+
+/* --------------------------------------------------------------------------
+   THE 3D BOOK — a wine-dark board on cream paper
+   -------------------------------------------------------------------------- */
+.vl-3d-book__face {
+  background: var(--vl-plum-2);
+  box-shadow: 5px 5px 20px rgba(60,48,38,.45);
+}
+
+.vl-3d-book__face--back {
+  background: var(--vl-plum);
+  box-shadow: -10px 0 50px 10px rgba(60,48,38,.45);
+}
+
+.vl-3d-book__shadow {
+  background: radial-gradient(ellipse at center, rgba(60,48,38,.30), transparent 70%);
+}
+
+/* --------------------------------------------------------------------------
+   PROSE
+   -------------------------------------------------------------------------- */
+.vl-prose p { color: var(--vl-ivory-dim); }
+.vl-prose a { color: var(--vl-oxblood); }
+.vl-prose a:hover { color: var(--vl-teal-dk); }
+.vl-prose blockquote {
+  border-left-color: var(--vl-oxblood);
+  color: var(--vl-ink);
+}
+.vl-prose hr { border-top-color: var(--vl-line); }
+
+/* --------------------------------------------------------------------------
+   UTILITIES
+   -------------------------------------------------------------------------- */
+.vl-pill {
+  border-color: var(--vl-line);
+  color: var(--vl-muted);
+  background: transparent;
+}
+
+.vl-pill:hover,
+.vl-pill.is-active {
+  border-color: var(--vl-oxblood);
+  color: var(--vl-oxblood);
+  background: rgba(110,26,43,.06);
+}
+
+.vl-link-arrow { color: var(--vl-oxblood); }
+.vl-link-arrow:hover { color: var(--vl-teal-dk); }
+
+/* The hairline diamond rule */
+.vl-rule,
+.vl-sect-head::after {
+  background: var(--vl-paper-3);
+}
+
+/* --------------------------------------------------------------------------
+   DARK MODE — the reference swaps parchment for ink
+   -------------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --vl-ink:        #F2EDE3;
+    --vl-ink-2:      #1A1A1D;
+    --vl-charcoal:   #24242A;
+    --vl-paper:      #0E0E10;
+    --vl-paper-2:    #16161A;
+    --vl-paper-3:    #2A0A14;
+    --vl-ash:        #1A1A1D;
+    --vl-ivory:      #F2EDE3;
+    --vl-ivory-dim:  #D8C4A8;
+    --vl-muted:      #A9B8B8;
+    --vl-muted-2:    #7E9294;
+    --vl-line:       rgba(216,196,168,.20);
+    --vl-line-2:     rgba(216,196,168,.10);
+    --vl-line-gold:  rgba(201,168,106,.42);
+    --vl-shadow-sm:  0 2px 10px rgba(0,0,0,.45);
+    --vl-shadow:     0 18px 44px -18px rgba(0,0,0,.85);
+    --vl-shadow-lg:  0 44px 90px -30px rgba(0,0,0,.92);
+  }
+
+  body { background: var(--vl-paper); color: var(--vl-ink); }
+  body::before { mix-blend-mode: normal; opacity: .05; }
+  body::after {
+    background:
+      radial-gradient(ellipse 120% 60% at 50% 0%, rgba(110,26,43,.22), transparent 68%),
+      radial-gradient(ellipse 90% 50% at 50% 100%, rgba(90,122,122,.10), transparent 70%);
+  }
+
+  .vl-header {
+    background: rgba(14,14,16,.97);
+    border-bottom: 1px solid var(--vl-line-2);
+  }
+  .vl-header.is-stuck { background: rgba(14,14,16,.99); }
+
+  .vl-brand__name,
+  .vl-nav__link,
+  .vl-cart,
+  .vl-search input,
+  .vl-search__icon { color: var(--vl-ivory); }
+
+  .vl-nav__link:hover,
+  .vl-nav__link.is-active { color: var(--vl-gold); }
+
+  .vl-search input { background: rgba(255,255,255,.04); border-color: var(--vl-line); }
+  .vl-search input:focus { background: rgba(255,255,255,.07); }
+
+  .vl-cart { background: rgba(14,14,16,.42); }
+  .vl-burger { border-color: var(--vl-line); }
+  .vl-burger span { background: var(--vl-ivory); }
+
+  .vl-nav ul { background: #16161A; }
+  .vl-nav ul li a { color: var(--vl-muted); }
+
+  .vl-section { background: var(--vl-paper); }
+  .vl-section--alt,
+  .vl-section--paper { background: var(--vl-paper-2); }
+
+  .vl-book,
+  .vl-post,
+  .vl-card { background: var(--vl-paper-2); border-color: var(--vl-line-2); }
+
+  .vl-book__title a,
+  .vl-post__title a,
+  .vl-sect-head h2,
+  .vl-feature__title,
+  .vl-faq__q,
+  .vl-news__title,
+  .vl-sect-head h3 { color: var(--vl-ivory); }
+
+  .vl-book__title a:hover,
+  .vl-post__title a:hover,
+  .vl-faq__q:hover { color: var(--vl-gold); }
+
+  .vl-product__stage {
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 58%, rgba(110,26,43,.28), transparent 70%),
+      var(--vl-paper-2);
+  }
+  .vl-product__glow { background: radial-gradient(ellipse at center, rgba(201,168,106,.22), transparent 70%); }
+
+  .vl-rail__btn { background: rgba(14,14,16,.75); color: var(--vl-ivory); }
+
+  .vl-split-hero { background: var(--vl-paper); }
+  .vl-split-hero__cover {
+    background: linear-gradient(160deg, var(--vl-paper-2), var(--vl-ash));
+    border-right-color: var(--vl-line);
+  }
+
+  .vl-field input,
+  .vl-field textarea,
+  .vl-news__form input { background: rgba(255,255,255,.04); border-color: var(--vl-line); color: var(--vl-ivory); }
+  .vl-field input:focus,
+  .vl-news__form input:focus { background: rgba(255,255,255,.07); }
+
+  .vl-news { background: var(--vl-paper-2); border-color: var(--vl-line); }
+  .vl-faq__item { border-color: var(--vl-line); }
+
+  .vl-gallery__main {
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(110,26,43,.24), transparent 68%),
+      var(--vl-paper-2);
+  }
+  .vl-gallery__thumb { border-color: var(--vl-line-2); }
+
+  .vl-cart-drawer__panel { background: var(--vl-paper-2); color: var(--vl-ivory); }
+  .vl-cart-drawer__title { color: var(--vl-ivory); }
+  .vl-cart-drawer__item { border-bottom-color: var(--vl-line-2); }
+
+  .vl-buy__note { background: rgba(201,168,106,.10); color: var(--vl-ivory-dim); }
+
+  .vl-ticker__item { color: var(--vl-ivory); }
+
+  .vl-prose p { color: var(--vl-ivory-dim); }
+  .vl-prose a { color: var(--vl-gold); }
+  .vl-prose blockquote { color: var(--vl-ivory); }
+}
+
+/* --------------------------------------------------------------------------
+   REDUCED MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .vl-split-hero__slide { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   COMPONENT FIX-UPS FOR THE LIGHT THEME
+   -------------------------------------------------------------------------- */
+
+/* The hero arrows sit over a dark image, so they stay light. */
+.vl-hero__arrow {
+  background: rgba(242,237,227,.14);
+  border-color: rgba(242,237,227,.34);
+  color: var(--vl-paper);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.vl-hero__arrow:hover {
+  background: var(--vl-oxblood);
+  border-color: var(--vl-oxblood);
+  color: var(--vl-paper);
+}
+
+/* The feature strip is a cream band, not a black one. */
+.vl-features {
+  background: var(--vl-line-2);
+  border-block-color: var(--vl-line-2);
+}
+
+.vl-feature {
+  background: var(--vl-paper);
+  border-color: var(--vl-line-2);
+}
+
+.vl-feature:hover {
+  background: var(--vl-paper-2);
+}
+
+.vl-feature__title { color: var(--vl-ink); }
+
+/* The ghost button over a dark hero needs a light border. */
+.vl-slide__cta .vl-btn--ghost,
+.vl-slide__cta .vl-btn--outline {
+  border-color: rgba(242,237,227,.46);
+  color: var(--vl-paper);
+}
+
+.vl-slide__cta .vl-btn--ghost:hover,
+.vl-slide__cta .vl-btn--outline:hover {
+  background: var(--vl-paper);
+  border-color: var(--vl-paper);
+  color: var(--vl-ink);
+}
+
+/* The scroll cue */
+.vl-scroll,
+.vl-slide__scroll {
+  color: rgba(242,237,227,.78);
+}
+
+/* The counter band beside the author photo */
+.vl-counter,
+.vl-author__stats {
+  background: var(--vl-ink);
+}
+
+.vl-counter b,
+.vl-author__stats b { color: var(--vl-gold); }
+
+/* The hero pause button */
+.vl-hero__pause {
+  background: rgba(242,237,227,.16);
+  border-color: rgba(242,237,227,.30);
+  color: var(--vl-paper);
+}
+
+.vl-hero__pause:hover {
+  background: var(--vl-oxblood);
+  border-color: var(--vl-oxblood);
+}
+
+/* The benefits / features icons keep their wine accent */
+.vl-feature__icon { color: var(--vl-oxblood); }
+
+/* The gold diamond rule between sections */
+.vl-sect-head__rule,
+.vl-rule-diamond {
+  background: var(--vl-oxblood);
+}
+
+/* The pull-quote band — deep wine, like the reference. */
+.vl-quote-band {
+  background:
+    radial-gradient(ellipse 70% 120% at 50% 50%, rgba(139,58,47,.55), transparent 70%),
+    var(--vl-oxblood-dk);
+  border-block: 1px solid var(--vl-line-gold);
+  padding-block: clamp(56px, 7vw, 92px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* A faint ornamental corner, as the reference carries. */
+.vl-quote-band::before,
+.vl-quote-band::after {
+  content: '';
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgba(201,168,106,.32);
+  pointer-events: none;
+}
+.vl-quote-band::before {
+  top: 18px; left: 18px;
+  border-right: 0; border-bottom: 0;
+}
+.vl-quote-band::after {
+  bottom: 18px; right: 18px;
+  border-left: 0; border-top: 0;
+}
+
+.vl-quote-band .vl-display-quote {
+  max-width: 24ch;
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+  line-height: 1.42;
+}
+
+.vl-quote-band cite,
+.vl-quote-band .vl-display-quote + * {
+  color: var(--vl-gold);
+  font-family: var(--vl-font-ui);
+  font-style: normal;
+  letter-spacing: .22em;
+  font-size: .62rem;
+  margin-top: 22px;
+  display: block;
+}
+
+/* The journal grid stays on paper, like the reference. */
+.vl-section--plum {
+  background: var(--vl-paper);
+  border-block: 1px solid var(--vl-line-2);
+}
+
+.vl-section--plum .vl-display-quote,
+.vl-section--plum .vl-display-quote::before,
+.vl-section--plum .vl-display-quote::after { color: var(--vl-ink); }
+
+/* The section eyebrow over paper uses the wine accent. */
+.vl-section--plum .vl-eyebrow { color: var(--vl-oxblood); }
+
+/* The newsletter band keeps the deep wine treatment. */
+.vl-newsletter,
+.vl-cta-band {
+  background:
+    radial-gradient(ellipse 80% 140% at 50% 0%, rgba(139,58,47,.45), transparent 65%),
+    var(--vl-oxblood-dk);
+  border-block: 1px solid var(--vl-line-gold);
+}
+
+.vl-newsletter .vl-sect-head__title,
+.vl-cta-band .vl-sect-head__title { color: var(--vl-paper-2); }
+
+.vl-newsletter .vl-sect-head__eyebrow,
+.vl-cta-band .vl-sect-head__eyebrow { color: var(--vl-gold); }
+
+/* --------------------------------------------------------------------------
+   NEWSLETTER BAND — the reference sets it on deep wine
+   -------------------------------------------------------------------------- */
+.vl-news {
+  background:
+    radial-gradient(70% 130% at 50% 0%, rgba(139,58,47,.50), transparent 62%),
+    var(--vl-oxblood-dk);
+  border-block-color: var(--vl-line-gold);
+}
+
+.vl-news::before { background: none; }
+
+.vl-news h2,
+.vl-news .vl-sect-head__title { color: var(--vl-paper-2); }
+
+.vl-news .vl-eyebrow { color: var(--vl-gold); }
+
+.vl-news .vl-lede {
+  color: rgba(242,237,227,.80);
+}
+
+.vl-news__form input {
+  background: rgba(14,14,16,.34);
+  border-color: rgba(201,168,106,.42);
+  color: var(--vl-paper-2);
+}
+
+.vl-news__form input::placeholder { color: rgba(242,237,227,.48); }
+
+.vl-news__form input:focus {
+  border-color: var(--vl-gold);
+  background: rgba(14,14,16,.52);
+}
+
+.vl-news__note { color: rgba(242,237,227,.62); }
+
+/* The subscribe button keeps the gold accent on wine. */
+.vl-news .vl-btn {
+  background: var(--vl-gold);
+  color: var(--vl-ink);
+  border-color: var(--vl-gold);
+}
+.vl-news .vl-btn:hover {
+  background: #D8C4A8;
+  border-color: #D8C4A8;
+}
+
+/* Every plain form field on paper needs a visible edge. */
+.vl-field input,
+.vl-field select,
+.vl-field textarea,
+.vl-search input,
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+input[type="url"],
+textarea,
+select {
+  background: var(--vl-paper-2);
+  border: 1px solid var(--vl-line-2);
+  color: var(--vl-ink);
+}
+
+.vl-field input:focus,
+.vl-field select:focus,
+.vl-field textarea:focus,
+.vl-search input:focus {
+  border-color: var(--vl-oxblood);
+  background: #FFFDF8;
+  box-shadow: 0 0 0 3px rgba(110,26,43,.10);
+}
+
+.vl-field input::placeholder,
+.vl-field textarea::placeholder { color: var(--vl-muted-2); }
+
+.vl-search { border-color: var(--vl-line-2); }
+.vl-search input { background: transparent; }
+
+/* Specificity fix — the newsletter field lives on wine, not on paper. */
+.vl-news .vl-news__form input[type="email"],
+.vl-news__form input[type="email"] {
+  background: rgba(14,14,16,.38);
+  border: 1px solid rgba(201,168,106,.45);
+  color: var(--vl-paper-2);
+}
+
+.vl-news .vl-news__form input[type="email"]::placeholder {
+  color: rgba(242,237,227,.50);
+}
+
+.vl-news .vl-news__form input[type="email"]:focus {
+  background: rgba(14,14,16,.55);
+  border-color: var(--vl-gold);
+  box-shadow: 0 0 0 3px rgba(201,168,106,.18);
+}
+
+.vl-news .vl-btn,
+.vl-news__form .vl-btn {
+  --btn-bg: var(--vl-gold);
+  --btn-fg: var(--vl-ink);
+  --btn-border: var(--vl-gold);
+  background: var(--vl-gold);
+  color: var(--vl-ink);
+  border-color: var(--vl-gold);
+}
+
+.vl-news .vl-btn:hover,
+.vl-news__form .vl-btn:hover {
+  --btn-bg: #DCC9A4;
+  --btn-border: #DCC9A4;
+  background: #DCC9A4;
+  color: var(--vl-ink);
+}
+
+.vl-news .vl-btn.vl-btn--gold {
+  --btn-bg: var(--vl-gold);
+  --btn-fg: var(--vl-ink);
+  background: var(--vl-gold);
+  color: var(--vl-ink);
+  border-color: var(--vl-gold);
+}
+
+.vl-news .vl-btn.vl-btn--gold:hover {
+  --btn-bg: #DCC9A4;
+  background: #DCC9A4;
+  color: var(--vl-ink);
+}
+
+/* The stat badge on the author portrait — deep wine, as in the reference. */
+.vl-split__stat {
+  background: var(--vl-oxblood-dk);
+  border-color: var(--vl-line-gold);
+  box-shadow: 0 18px 40px rgba(74,14,28,.28);
+}
+
+.vl-split__stat b { color: var(--vl-gold); }
+.vl-split__stat span { color: rgba(242,237,227,.66); }
+
+/* --------------------------------------------------------------------------
+   PRODUCT PAGE — variations, gallery, badges
+   -------------------------------------------------------------------------- */
+.vl-variant {
+  background: var(--vl-paper-2);
+  border-color: var(--vl-line-2);
+}
+
+.vl-variant:hover {
+  border-color: var(--vl-line-gold);
+  background: var(--vl-paper);
+}
+
+.vl-variant.is-selected {
+  border-color: var(--vl-gold);
+  background: rgba(201,168,106,.10);
+}
+
+.vl-variant__label { color: var(--vl-ink); }
+.vl-variant__label small { color: var(--vl-muted-2); }
+.vl-variant__price { color: var(--vl-oxblood); }
+.vl-variant__radio { border-color: var(--vl-line-2); }
+.vl-variant.is-selected .vl-variant__radio { border-color: var(--vl-gold); }
+.vl-variant.is-selected .vl-variant__radio::after { background: var(--vl-gold); }
+
+/* The gallery panel sits on a soft warm wash, like the reference. */
+.vl-gallery__main {
+  background:
+    radial-gradient(ellipse at 50% 38%, rgba(110,26,43,.10), transparent 66%),
+    linear-gradient(180deg, var(--vl-paper-2), var(--vl-paper));
+  box-shadow: 0 30px 70px rgba(60,48,38,.16);
+}
+
+.vl-gallery__thumbs .vl-gallery__thumb { border-color: var(--vl-line-2); }
+.vl-gallery__thumb.is-active { border-color: var(--vl-oxblood); }
+
+/* The meta strip under the title */
+.vl-meta,
+.vl-book-meta { color: var(--vl-muted); }
+.vl-meta dt,
+.vl-book-meta dt { color: var(--vl-oxblood); }
+
+/* Badges */
+.vl-badge {
+  background: var(--vl-ink);
+  color: var(--vl-paper);
+  border-color: var(--vl-line-gold);
+}
+.vl-badge--gold { background: var(--vl-gold); color: var(--vl-ink); }
+.vl-badge--sale { background: var(--vl-oxblood); color: var(--vl-paper); }
+
+/* The sticky mobile buy bar */
+.vl-buybar {
+  background: rgba(242,237,227,.97);
+  border-top: 1px solid var(--vl-line-2);
+  box-shadow: 0 -8px 28px rgba(60,48,38,.12);
+}
+.vl-buybar__title { color: var(--vl-ink); }
+.vl-buybar__price { color: var(--vl-oxblood); }
+
+/* The rating stars */
+.vl-stars { color: var(--vl-gold); }
+
+/* --------------------------------------------------------------------------
+   THE BRAND MARK
+   -------------------------------------------------------------------------- */
+.vl-brand__logo {
+  border-color: rgba(201,168,106,.45);
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,.55), transparent 62%),
+    radial-gradient(circle at 50% 50%, rgba(216,196,168,.34), transparent 70%);
+  box-shadow: 0 4px 14px rgba(110,26,43,.12);
+}
+
+.vl-brand__mark {
+  width: 78%;
+  height: 78%;
+}
+
+/* The gold gradient def is shared by the inline header mark. */
+.vl-header svg.vl-brand__mark {
+  overflow: visible;
+}
+
+/* The footer lockup — the crest sits above the wordmark. */
+.vl-footer .vl-brand {
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding-left: 0;
+  min-height: 0;
+}
+
+.vl-footer .vl-brand__crest {
+  position: static;
+  display: block;
+  width: 104px;
+  height: 96px;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 6px 16px rgba(42,9,16,.5));
+}
+
+.vl-footer .vl-brand__mark { display: none; }
+
+.vl-footer .vl-brand__name { font-size: 1.35rem; }
+
+/* --------------------------------------------------------------------------
+   THE HERO TITLE — always light, because it sits over a dark image
+   -------------------------------------------------------------------------- */
+.vl-hero .vl-slide__title,
+.vl-slide__title,
+.vl-slide__content h1,
+.vl-slide__content h2 {
+  color: var(--vl-on-dark);
+}
+
+.vl-slide__title em {
+  color: var(--vl-gold-lt);
+}
+
+/* --------------------------------------------------------------------------
+   TEXT ON THE DARK BANDS — the quote and newsletter bands keep their wine
+   ground in both colour schemes, so their text must stay light.
+   -------------------------------------------------------------------------- */
+.vl-quote-band .vl-display-quote,
+.vl-quote-band .vl-display-quote::before,
+.vl-quote-band .vl-display-quote::after,
+.vl-quote-band cite,
+.vl-news h2,
+.vl-news .vl-sect-head__title,
+.vl-news .vl-lede,
+.vl-news__note {
+  color: var(--vl-on-dark);
+}
+
+.vl-quote-band cite { color: var(--vl-gold); }
+
+/* The footer is always ink. */
+.vl-footer .vl-brand__name,
+.vl-footer__title,
+.vl-footer a,
+.vl-footer p,
+.vl-footer span {
+  color: var(--vl-on-dark);
+}
+
+.vl-footer .vl-footer__title,
+.vl-footer .vl-brand__tag {
+  color: rgba(242,237,227,.66);
+}
+
+/* The cart drawer is always a light panel in the light theme and ink in the
+   dark one — so it follows --vl-paper, which is correct in both. */
+.vl-cart__title,
+.vl-cart h3 { color: var(--vl-ink); }

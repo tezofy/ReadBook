@@ -28,10 +28,17 @@ cp "$SRC/style.css"                "$STAGE/"
 cp "$SRC/functions.php"            "$STAGE/"
 cp "$SRC/header.php"               "$STAGE/"
 cp "$SRC/footer.php"               "$STAGE/"
-cp "$SRC/inc/demo-content.php"     "$STAGE/inc/"
+cp "$SRC/front-page.php"           "$STAGE/"
+cp "$SRC/page-client.php"           "$STAGE/"
+cp "$SRC/screenshot.png"           "$STAGE/" 2>/dev/null || true
+cp "$SRC/inc/"*.php                "$STAGE/inc/"
 cp "$SRC/assets/css/"*.css         "$STAGE/assets/css/"
 cp "$SRC/assets/js/"*.js           "$STAGE/assets/js/"
 cp "$SRC/assets/img/"*.svg         "$STAGE/assets/img/" 2>/dev/null || true
+cp "$SRC/assets/img/"*.jpg         "$STAGE/assets/img/" 2>/dev/null || true
+mkdir -p "$STAGE/assets/img/client"
+cp "$SRC/assets/img/client/"*.jpg   "$STAGE/assets/img/client/" 2>/dev/null || true
+cp "$SRC/assets/img/client/"*.png   "$STAGE/assets/img/client/" 2>/dev/null || true
 
 echo "▸ Copying documentation into the package"
 mkdir -p "$STAGE/docs"
@@ -43,20 +50,48 @@ echo "▸ Version: $VERSION"
 
 echo "▸ Building zip"
 cd "$DIST"
+rm -f "nocturne.zip"
 zip -qr "nocturne.zip" "nocturne"
 
 # The zip must contain style.css at the root of the theme folder, or
 # WordPress will refuse to install it.
-if ! unzip -Z1 "nocturne.zip" | grep -qx "nocturne/style.css"; then
+LISTING="$(mktemp)"
+unzip -Z1 "nocturne.zip" > "$LISTING"
+
+if ! grep -qx "nocturne/style.css" "$LISTING"; then
   echo "❌ style.css is not at the zip root — WordPress would reject this" >&2
   echo "   Archive contents:" >&2
-  unzip -Z1 "nocturne.zip" | sed 's/^/     /' >&2
+  sed 's/^/     /' "$LISTING" >&2
   exit 1
 fi
 
 # The theme must also contain its entry points.
-for required in nocturne/functions.php nocturne/header.php nocturne/footer.php; do
-  if ! unzip -Z1 "nocturne.zip" | grep -qx "$required"; then
+for required in \
+  nocturne/functions.php \
+  nocturne/header.php \
+  nocturne/footer.php \
+  nocturne/front-page.php \
+  nocturne/inc/shortcodes.php \
+  nocturne/inc/demo-content.php \
+  nocturne/assets/css/effects.css \
+  nocturne/assets/css/parchment.css \
+  nocturne/assets/js/effects.js \
+  nocturne/assets/img/logo.svg \
+  nocturne/assets/img/monogram.svg \
+  nocturne/assets/img/favicon.svg \
+  nocturne/assets/css/client.css \
+  nocturne/assets/js/client.js \
+  nocturne/assets/js/client-data.js \
+  nocturne/inc/client-shortcodes.php \
+  nocturne/inc/client-header.php \
+  nocturne/inc/client-footer.php \
+  nocturne/inc/client-overlay.php \
+  nocturne/page-client.php \
+  nocturne/assets/img/client/logo-ci-transparent.png \
+  nocturne/assets/img/client/cover-speranta.jpg \
+  nocturne/assets/img/client/author-portrait.jpg \
+  nocturne/screenshot.png ; do
+  if ! grep -qx "$required" "$LISTING"; then
     echo "❌ $required is missing from the package" >&2
     exit 1
   fi

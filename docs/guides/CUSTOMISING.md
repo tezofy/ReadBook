@@ -187,6 +187,57 @@ document.querySelector('.vl-hero__track').appendChild(slide);
 | Under ~8 MB | Mobile data is expensive |
 | 8–15 seconds | Long enough to land, short enough to hold attention |
 
+### The split hero
+
+A cover standing up in 3D on the left, a looping video on the right. The
+cover swaps when the video changes.
+
+```
+[nocturne_split_hero slides="
+https://site.com/still-1.jpg | https://site.com/loop-1.mp4 | Velvet Vow | He kept it to get her. | https://site.com/cover-velvet-vow.jpg
+https://site.com/still-2.jpg | https://site.com/loop-2.mp4 | The Hollow Church | The bell rang for her. | https://site.com/cover-hollow.jpg
+"]
+```
+
+One slide per line. The five columns are:
+
+| Column | What it is |
+|---|---|
+| 1 | Poster / still image |
+| 2 | Looping video URL (leave blank for an image-only slide) |
+| 3 | Title, used for the alt text |
+| 4 | Excerpt |
+| 5 | Cover URL for the 3D book on the left (blank reuses column 1) |
+
+You can also set these in the Customizer under **Appearance → Customize →
+Nocturne → Split hero slides**, which is easier than editing a shortcode.
+
+### The product rail
+
+```
+[nocturne_showcase count="6" category="ebooks" title="Featured Titles" excerpt="…"]
+```
+
+| Attribute | Default | What it does |
+|---|---|---|
+| `count` | `6` | How many products to pull |
+| `category` | — | Comma-separated product-category slugs |
+| `title` | — | Heading above the rail |
+| `excerpt` | — | Supporting line under the heading |
+| `orderby` | `menu_order` | Product order — also accepts `date` and `title` |
+
+It reads your real WooCommerce products and their featured images, so there
+is nothing to keep in sync by hand.
+
+### The ticker
+
+```
+[nocturne_ticker items="Signed by the author | Gilded edges | Worldwide shipping"]
+```
+
+Pipe-separated. The second half of the strip is a duplicate so the loop is
+seamless — you only ever write the list once.
+
 ---
 
 ## 4. WooCommerce hooks
@@ -241,20 +292,45 @@ plugin's.
 
 ### A new animation
 
-Always use the existing easing tokens and respect reduced motion:
+The motion layer already lives in `assets/css/effects.css` and
+`assets/js/effects.js`. Reach for it before writing anything new.
+
+**Reveal an element as it scrolls into view:**
+
+```html
+<div data-animate="fade-up" data-delay="120">…</div>
+```
+
+Fourteen effects are built in: `fade`, `fade-up`, `fade-down`, `fade-left`,
+`fade-right`, `zoom-in`, `zoom-out`, `slide-up`, `slide-down`, `blur-in`,
+`flip-y`, `reveal-mask`, `text-entrance` and `letter-stagger`.
+
+**Cascade a group of cards:**
+
+```html
+<div data-group="90">
+  <article data-animate="fade-up">…</article>
+  <article data-animate="fade-up">…</article>
+  <article data-animate="fade-up">…</article>
+</div>
+```
+
+The number is the delay between each child, in milliseconds.
+
+**A brand new effect:** add a rule to `effects.css` that targets
+`[data-animate="your-effect"]` and sets the resting state, then add the
+matching `[data-animate="your-effect"].is-in` rule. The engine adds `.is-in`
+for you — you never write JavaScript for a reveal.
+
+Always respect reduced motion:
 
 ```css
-.vl-reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity .9s var(--vl-ease-out), transform .9s var(--vl-ease-out);
-}
-.vl-reveal.is-in { opacity: 1; transform: none; }
-
 @media (prefers-reduced-motion: reduce) {
-  .vl-reveal { opacity: 1; transform: none; }
+  [data-animate] { opacity: 1 !important; transform: none !important; }
 }
 ```
+
+A block like this already exists at the foot of `effects.css`.
 
 ### A new JS behaviour
 
@@ -267,6 +343,8 @@ function initMyThing() {
 
 // register it in boot()
 ```
+
+`boot()` in `effects.js` is the single entry point. Add your call there.
 
 ---
 

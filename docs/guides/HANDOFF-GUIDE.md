@@ -25,6 +25,7 @@
 14. [Backups](#14-backups)
 15. [When something breaks](#15-when-something-breaks)
 16. [The mobile hero — why it is special](#16-the-mobile-hero--why-it-is-special)
+17. [The client edition — Christiana Ciocan](#17-the-client-edition--christiana-ciocan) ⭐
 
 ---
 
@@ -593,6 +594,109 @@ The poster is the still frame shown while the video loads, and on slow
 connections. Without it, a visitor on mobile data would see a black box.
 This is why the first field of each slide is the image URL, even for video
 slides.
+
+---
+
+## 17. The client edition — Christiana Ciocan
+
+The theme carries a second, complete design edition built from the client's
+approved artwork: the *Imperiul Umbrelor* series, the standalone titles, the
+reader reviews, the journal and the vault (the cart).
+
+### Where things live
+
+| Piece | Path |
+|---|---|
+| The design system | `template/assets/css/client.css` |
+| The catalogue (books, reviews, posts, copy) | `template/assets/js/client-data.js` |
+| The behaviour (rail, vault, overlay, reviews) | `template/assets/js/client.js` |
+| The shortcodes | `template/inc/client-shortcodes.php` |
+| The artwork | `template/assets/img/client/` |
+| A live static preview | `preview/client/` |
+
+### The four shortcodes
+
+Paste any of these into a WordPress page:
+
+```
+[nocturne_client_gates]        → the three gateways
+[nocturne_client_series]       → the draggable book rail
+[nocturne_client_standalone]   → the standalone titles
+[nocturne_client_journal]      → the journal grid
+```
+
+To rebuild the home page, drop the four shortcodes into a page in this
+order: gates → series → standalone → journal. `front-page.php` already
+contains the full client home (the welcome panel, the author block, the
+gates, the series rail, the future-projects block and the contact form).
+
+### Changing a price, a status or a review
+
+Open `template/assets/js/client-data.js`. Every book is one object:
+
+```js
+{
+  id: 'speranta',
+  title: 'SPERANȚA ARE NUMELE LUI',
+  price: 75,
+  status: 'DISPONIBIL',
+  statusClass: 'in',          // in | pre | soon
+  badge: null,                // shown at the top-right of the cover
+  img: 'assets/img/client/cover-speranta.jpg',
+  desc: 'Vol. 1 Imperiul Umbrelor'
+}
+```
+
+Set `price: 0` for a title that is not on sale yet — the button then reads
+**INDISPONIBIL** and cannot be clicked.
+
+Reviews live under `reviews`, keyed by the book `id`. Each one is
+`{ name, stars, text }` with 1–5 stars.
+
+Journal posts live under `posts` with `tag`, `date`, `title`, `excerpt`,
+`img` and `href`.
+
+### The artwork
+
+`template/assets/img/client/` holds the eight images from the client's
+design. Three of them arrived as **open-book spreads** — the front cover was
+cropped out and the untouched spread is kept next to it:
+
+| File | What it is |
+|---|---|
+| `cover-speranta.jpg` | Speranța Are Numele Lui — front cover |
+| `cover-paculul.jpg` | Păcatul Casei Vanni — front cover |
+| `cover-mostenirea.jpg` | Moștenirea Sinistră — front cover |
+| `cover-exilul.jpg` | Exilul Sângelui |
+| `cover-a94.jpg` | Proiectul A-94 (phone mockup) |
+| `speranta-stack.jpg` | the sprayed-edges stack |
+| `author-portrait.jpg` | the author portrait |
+| `logo-ci.jpg` | the gold monogram banner |
+| `thumb-*.jpg` | the wide crops used by the journal grid |
+| `spread-*.jpg` | the original open-book spreads |
+
+**To swap a cover:** drop the new file in `template/assets/img/client/`,
+keep the same filename, and update `img` in `client-data.js` if the name
+changed. Keep the proportions close to **2 : 3** (portrait) so the rail
+stays even.
+
+### The vault (the cart)
+
+The vault is a client-side basket — it lives in the browser's
+`localStorage` under the key `nocturne_vault`, so it works on any page
+without a server. To connect it to real WooCommerce checkout, replace the
+`addToVault` function in `template/assets/js/client.js` with a call to
+`wc-ajax=add_to_cart`.
+
+### Two editions, one theme
+
+The original Nocturne landing page and the client edition live side by side.
+The client's design uses its own token namespace (`--cl-*`), so changing one
+never breaks the other. `assets/css/client.css` is enqueued after
+`assets/css/parchment.css` and therefore wins where the two overlap.
+
+To make the client edition the only one you see, set the WordPress
+front page to a page built from the four shortcodes.
 
 ---
 

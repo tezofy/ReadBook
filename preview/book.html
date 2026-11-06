@@ -3,14 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Velvet Vow — Nocturne | Read &amp; Buy</title>
+<title>Velvet Vow — Christiana Ciocan | Read &amp; Buy</title>
 <meta name="description" content="Velvet Vow by Nocturne. E-book and signed paperback, direct from the author. Read the first chapter free.">
 <meta name="theme-color" content="#0B0A0D">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Lora:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/nocturne.css">
 <link rel="stylesheet" href="assets/css/cart.css">
+<link rel="stylesheet" href="assets/css/effects.css">
+<link rel="stylesheet" href="assets/css/parchment.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 
 <script type="application/ld+json">
@@ -18,7 +20,7 @@
   "@context":"https://schema.org",
   "@type":"Book",
   "name":"Velvet Vow",
-  "author":{"@type":"Person","name":"Nocturne"},
+  "author":{"@type":"Person","name":"Christiana Ciocan"},
   "bookFormat":"https://schema.org/EBook",
   "inLanguage":"en",
   "numberOfPages":384,
@@ -31,42 +33,62 @@
     "highPrice":"19.99",
     "offerCount":"2",
     "availability":"https://schema.org/InStock",
-    "seller":{"@type":"Organization","name":"Nocturne"}
+    "seller":{"@type":"Organization","name":"Christiana Ciocan"}
   }
 }
 </script>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="vl-mark-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EBD3A0"/>
+      <stop offset="0.5" stop-color="#C9A86A"/>
+      <stop offset="1" stop-color="#9E7B41"/>
+    </linearGradient>
+  </defs>
+</svg>
 
-<header class="vl-header">
+
+<header class="vl-header" id="header" data-sticky-start="10" data-sticky-height="70">
   <div class="vl-header__inner">
-    <a href="index.html" class="vl-brand" aria-label="Nocturne — home">
-      <svg class="vl-brand__mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <circle cx="24" cy="24" r="22.5" stroke="#C9A227" stroke-width="1" opacity=".55"/>
-        <path d="M24 33c-4.5-2.6-7-6.2-7-9.9 0-3 2-5.3 4.6-5.3 1.7 0 3 1 3.7 2.4.7-1.4 2-2.4 3.7-2.4 2.6 0 4.6 2.3 4.6 5.3 0 3.7-2.5 7.3-7 9.9z" fill="#8A1F2E"/>
-        <path d="M24 33V17" stroke="#C9A227" stroke-width="1.1" stroke-linecap="round"/>
-        <path d="M24 24.5 20 21M24 21l4-3.5" stroke="#C9A227" stroke-width=".9" stroke-linecap="round"/>
-      </svg>
+    <a href="#top" class="vl-brand" aria-label="Christiana Ciocan — acasă">
+      <span class="vl-brand__crest">
+        <img src="assets/img/client/logo-ci-transparent.png" alt="">
+      </span>
       <span class="vl-brand__text">
-        <span class="vl-brand__name">Nocturne</span>
-        <span class="vl-brand__tag">Vane &nbsp;·&nbsp; Author</span>
+        <span class="vl-brand__name">CHRISTIANA CIOCAN</span>
+        <span class="vl-brand__tag">Imperiul Umbrelor &nbsp;·&nbsp; Autoare</span>
       </span>
     </a>
+
     <nav class="vl-nav" id="site-nav" aria-label="Primary">
-      <a class="vl-nav__link" href="index.html#books">Books</a>
-      <a class="vl-nav__link" href="index.html#about">About</a>
-      <a class="vl-nav__link" href="index.html#journal">Journal</a>
-      <a class="vl-nav__link" href="index.html#faq">FAQ</a>
-      <a class="vl-nav__link" href="index.html#contact">Contact</a>
+      <a class="vl-nav__link" href="#books">Books</a>
+      <a class="vl-nav__link" href="#about">About</a>
+      <a class="vl-nav__link" href="#journal">Journal</a>
+      <a class="vl-nav__link" href="#faq">FAQ</a>
+      <a class="vl-nav__link" href="#contact">Contact</a>
     </nav>
     <div class="vl-nav__backdrop"></div>
+
     <div class="vl-header__actions">
+      <form class="vl-search" role="search" onsubmit="return false;">
+        <svg class="vl-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+        </svg>
+        <label class="vl-sr" for="vl-search-field">Search books</label>
+        <input id="vl-search-field" type="search" name="s" placeholder="Search titles…">
+      </form>
       <button class="vl-cart" data-cart-open aria-label="Open cart">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
         <span>Cart</span>
         <span class="vl-cart__count">0</span>
       </button>
-      <button class="vl-burger" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
+      <button class="vl-burger" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
@@ -85,9 +107,20 @@
     <div class="vl-split" style="align-items:start">
 
       <!-- ── Gallery ── -->
-      <div class="vl-gallery" data-reveal>
+      <div class="vl-gallery" data-animate="fade-up">
         <div class="vl-gallery__main">
-          <img src="assets/img/cover-velvet-vow.jpg" alt="Velvet Vow book cover">
+          <!-- The cover is a real 3D object: it turns towards the reader
+               when hovered and the page block shows along the fore-edge. -->
+          <div class="vl-3d-book" data-tilt="4">
+            <div class="vl-3d-book__shadow"></div>
+            <div class="vl-3d-book__cover">
+              <div class="vl-3d-book__pages"></div>
+              <div class="vl-3d-book__face vl-3d-book__face--front">
+                <img src="assets/img/cover-velvet-vow.jpg" alt="Velvet Vow book cover">
+              </div>
+              <div class="vl-3d-book__face vl-3d-book__face--back"></div>
+            </div>
+          </div>
         </div>
         <div class="vl-gallery__thumbs">
           <button class="vl-gallery__thumb is-active" data-full="assets/img/cover-velvet-vow.jpg"><img src="assets/img/cover-velvet-vow.jpg" alt="Front cover"></button>
@@ -97,7 +130,7 @@
       </div>
 
       <!-- ── Product info (mirrors a WooCommerce single-product page) ── -->
-      <div data-reveal data-reveal-delay="1">
+      <div data-animate="fade-up" data-delay="90">
         <p class="vl-book__series">Ashgate Series · Book One</p>
         <h1 style="font-size:clamp(2.4rem,5vw,3.9rem);margin-bottom:18px">Velvet Vow</h1>
 
@@ -159,11 +192,11 @@
 <!-- ── Reading sample ── -->
 <section class="vl-section">
   <div class="vl-container vl-container--narrow">
-    <div class="vl-sect-head vl-sect-head--center" data-reveal>
+    <div class="vl-sect-head vl-sect-head--center" data-animate="fade-up">
       <span class="vl-eyebrow vl-eyebrow--center">Reading Sample</span>
       <h2>Chapter One</h2>
     </div>
-    <div class="vl-excerpt" data-reveal>
+    <div class="vl-excerpt" data-animate="fade-up">
       <p>The auction had ended at half past four and by six the Dalloway estate had emptied of everything portable except the woman in the gallery.</p>
       <p>Elias March had not intended to buy a house. He had come to buy a painting — a small, vicious thing in oil depicting a woman with her throat cut and her expression of mild surprise, which he had wanted since he was nineteen and had never been able to explain why. The estate had come with the painting. The estate had come with the grounds, the debt, the three hundred rooms that needed roofs, and a woman who was standing very still in a doorway as though she had been placed there by an interior decorator.</p>
       <p>“You are still here,” she said.</p>
@@ -171,7 +204,7 @@
       <p>She had not been told he was coming. That was the first thing he noticed, and the second was that she had not been frightened, which meant she had already decided what he was. Everyone else in the house had been frightened of him. The solicitors had been frightened. The house itself seemed faintly frightened, the way old houses do when they sense they are about to be sold.</p>
       <p>She was the only one who looked at him as though he were a problem she had already solved.</p>
     </div>
-    <div class="vl-center" style="margin-top:36px" data-reveal>
+    <div class="vl-center" style="margin-top:36px" data-animate="fade-up">
       <a href="#" class="vl-btn vl-btn--ghost">Download the full sample (PDF)</a>
     </div>
   </div>
@@ -180,12 +213,12 @@
 <!-- ── Related ── -->
 <section class="vl-section vl-section--alt">
   <div class="vl-container">
-    <div class="vl-sect-head vl-sect-head--center" data-reveal>
+    <div class="vl-sect-head vl-sect-head--center" data-animate="fade-up">
       <span class="vl-eyebrow vl-eyebrow--center">You May Also Like</span>
       <h2>Complete the set</h2>
     </div>
-    <div class="vl-grid vl-grid--3">
-      <article class="vl-book" data-reveal>
+    <div class="vl-grid vl-grid--3" data-group="90">
+      <article class="vl-book" data-animate="fade-up">
         <div class="vl-book__figure"><img src="assets/img/cover-hollow-church.jpg" alt="The Hollow Church cover" loading="lazy"></div>
         <div class="vl-book__body">
           <p class="vl-book__series">Ashgate Series · Book Two</p>
@@ -196,7 +229,7 @@
           </div>
         </div>
       </article>
-      <article class="vl-book" data-reveal data-reveal-delay="1">
+      <article class="vl-book" data-animate="fade-up" data-delay="90">
         <div class="vl-book__figure"><img src="assets/img/cover-obsession.jpg" alt="Obsession in Ink cover" loading="lazy"></div>
         <div class="vl-book__body">
           <p class="vl-book__series">Standalone</p>
@@ -207,7 +240,7 @@
           </div>
         </div>
       </article>
-      <article class="vl-book" data-reveal data-reveal-delay="2">
+      <article class="vl-book" data-animate="fade-up" data-delay="180">
         <div class="vl-book__figure"><img src="assets/img/hero-3.jpg" alt="Rain on a window at night" loading="lazy"></div>
         <div class="vl-book__body">
           <p class="vl-book__series">Free Reading</p>
@@ -234,7 +267,7 @@
 <footer class="vl-footer">
   <div class="vl-container">
     <div class="vl-footer__bar" style="border-top:0">
-      <p style="margin:0">© <span id="year">2026</span> Nocturne. All rights reserved.</p>
+      <p style="margin:0">© <span id="year">2026</span> Christiana Ciocan — Autoare. Toate drepturile rezervate.</p>
       <nav class="vl-footer__legal" aria-label="Legal">
         <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Shipping</a><a href="#">Refunds</a>
       </nav>
@@ -279,6 +312,7 @@
 </div>
 
 <script src="assets/js/nocturne.js"></script>
+<script src="assets/js/effects.js"></script>
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 

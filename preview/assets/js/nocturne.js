@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VELORIA — Interactions
+   NOCTURNE — Interactions
    1. Header behaviour (sticky / hide on scroll down)
    2. Mobile navigation drawer
    3. Hero media slider  ⭐ full-bleed, video-capable, swipeable
@@ -23,20 +23,15 @@
   function initHeader() {
     const header = $('.vl-header');
     if (!header) return;
-    let lastY = window.scrollY;
     let ticking = false;
 
-    const update = () => {
-      const y = window.scrollY;
-      header.classList.toggle('is-stuck', y > 40);
+    // The sticky-shrink behaviour lives in effects.js (it owns the
+    // [data-sticky-start] contract). This block only keeps the class in
+    // sync for markup that has no effects.js loaded.
+    if (window.Nocturne && window.Nocturne.effects) return;
 
-      // Hide on scroll down, reveal on scroll up (desktop only)
-      if (window.innerWidth > 900 && y > 320 && y > lastY + 4) {
-        header.classList.add('is-hidden');
-      } else if (y < lastY - 4 || y < 120) {
-        header.classList.remove('is-hidden');
-      }
-      lastY = y;
+    const update = () => {
+      header.classList.toggle('is-stuck', window.scrollY > 10);
       ticking = false;
     };
 
@@ -237,7 +232,10 @@
      4. REVEAL ON SCROLL
      ------------------------------------------------------------------ */
   function initReveal() {
-    const items = $$('[data-reveal]');
+    // Handle both the legacy [data-reveal] and the unified [data-animate].
+    // effects.js owns [data-animate] when it is loaded; this is the fallback.
+    if (window.Nocturne && window.Nocturne.effects) return;
+    const items = $$('[data-reveal], [data-animate]');
     if (!items.length) return;
     if (!('IntersectionObserver' in window)) {
       items.forEach(i => i.classList.add('is-in'));
@@ -476,6 +474,6 @@
   }
 
   // Expose a tiny API so the WordPress theme can drive the slider
-  window.Veloria = window.Veloria || {};
-  window.Veloria.init = boot;
+  window.Nocturne = window.Nocturne || {};
+  window.Nocturne.init = boot;
 })();

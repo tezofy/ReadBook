@@ -77,6 +77,20 @@ python3 scripts/test_theme.py
 - An empty form submit produces validation errors
 - The FAQ accordion opens
 
+**The effects system**
+- The sticky header gains `.is-stuck` after 10 px of scroll and the bar
+  condenses from 96 px to 70 px
+- The product rail's arrows step one whole card at a time
+- The rail disables its `prev` button at the start and its `next` button at
+  the end
+- Reveal elements gain `.is-in` once they enter the viewport
+
+> **A note on the overflow check.** The product rail, the ticker marquee and
+> the inactive split-hero slides all place content outside the viewport on
+> purpose — that is what a carousel and a marquee *are*. The suite excludes
+> them from the overflow scan. If you add a new horizontal scroller, exclude
+> it the same way, or the check will report it as a bug.
+
 **Accessibility basics**
 - Every image has an `alt` attribute
 - Every button and link has an accessible name

@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Nocturne — Dark Romance Author | Velvet Vow &amp; The Hollow Church</title>
+<title>Christiana Ciocan — Imperiul Umbrelor | Dark Romance Author</title>
 <meta name="description" content="Nocturne writes dark romance for readers who like their love story with teeth. Read Velvet Vow, The Hollow Church and Obsession in Ink — e-book and paperback, direct from the author.">
 <meta name="theme-color" content="#0B0A0D">
 <link rel="canonical" href="https://example.com/">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Nocturne — Dark Romance Author">
+<meta property="og:title" content="Christiana Ciocan — Imperiul Umbrelor">
 <meta property="og:description" content="Dark romance for readers who like their love story with teeth.">
 <meta property="og:image" content="assets/img/hero-1.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -18,10 +18,12 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Lora:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="assets/css/nocturne.css">
 <link rel="stylesheet" href="assets/css/cart.css">
+<link rel="stylesheet" href="assets/css/effects.css">
+<link rel="stylesheet" href="assets/css/parchment.css">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 
 <!-- Structured data -->
@@ -30,7 +32,7 @@
   "@context":"https://schema.org",
   "@type":"Person",
   "@id":"https://example.com/#author",
-  "name":"Nocturne",
+  "name":"Christiana Ciocan",
   "url":"https://example.com/",
   "jobTitle":"Author",
   "description":"Dark romance novelist writing morally complex, atmospheric fiction.",
@@ -39,25 +41,39 @@
 </script>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="vl-mark-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EBD3A0"/>
+      <stop offset="0.5" stop-color="#C9A86A"/>
+      <stop offset="1" stop-color="#9E7B41"/>
+    </linearGradient>
+  </defs>
+</svg>
+
 
 <a class="vl-sr" href="#main">Skip to content</a>
 
 <!-- ════════════════════════════════════════════════════════════
      HEADER
      ════════════════════════════════════════════════════════════ -->
-<header class="vl-header">
+<header class="vl-header" id="header" data-sticky-start="10" data-sticky-height="70">
   <div class="vl-header__inner">
-    <a href="#top" class="vl-brand" aria-label="Nocturne — home">
-      <svg class="vl-brand__mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <circle cx="24" cy="24" r="22.5" stroke="#C9A227" stroke-width="1" opacity=".55"/>
-        <path d="M24 33c-4.5-2.6-7-6.2-7-9.9 0-3 2-5.3 4.6-5.3 1.7 0 3 1 3.7 2.4.7-1.4 2-2.4 3.7-2.4 2.6 0 4.6 2.3 4.6 5.3 0 3.7-2.5 7.3-7 9.9z" fill="#8A1F2E"/>
-        <path d="M24 33V17" stroke="#C9A227" stroke-width="1.1" stroke-linecap="round"/>
-        <path d="M24 24.5 20 21M24 21l4-3.5" stroke="#C9A227" stroke-width=".9" stroke-linecap="round"/>
-      </svg>
-      <span class="vl-brand__text">
-        <span class="vl-brand__name">Nocturne</span>
-        <span class="vl-brand__tag">Vane &nbsp;·&nbsp; Author</span>
+    <a href="#top" class="vl-brand" aria-label="Christiana Ciocan — acasă">
+      <span class="vl-brand__crest">
+        <img src="assets/img/client/logo-ci-transparent.png" alt="">
       </span>
+      <span class="vl-brand__text">
+        <span class="vl-brand__name">CHRISTIANA CIOCAN</span>
+        <span class="vl-brand__tag">Imperiul Umbrelor &nbsp;·&nbsp; Autoare</span>
+      </span>
+    </a>
+
+    <a class="vl-header__badge" href="client/index.html" title="The Christiana Ciocan client edition">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 2l2.6 6.3L21 11l-6.4 2.7L12 20l-2.6-6.3L3 11l6.4-2.7z"/>
+      </svg>
+      <span class="vl-sr">Client edition</span>
     </a>
 
     <nav class="vl-nav" id="site-nav" aria-label="Primary">
@@ -70,6 +86,13 @@
     <div class="vl-nav__backdrop"></div>
 
     <div class="vl-header__actions">
+      <form class="vl-search" role="search" onsubmit="return false;">
+        <svg class="vl-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+        </svg>
+        <label class="vl-sr" for="vl-search-field">Search books</label>
+        <input id="vl-search-field" type="search" name="s" placeholder="Search titles…">
+      </form>
       <button class="vl-cart" data-cart-open aria-label="Open cart">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
@@ -181,7 +204,7 @@
 <!-- ════════════════════════════════════════════════════════════
      FEATURE STRIP
      ════════════════════════════════════════════════════════════ -->
-<section class="vl-features" aria-label="Store benefits">
+<section class="vl-features" aria-label="Store benefits" data-group="80">
   <div class="vl-feature">
     <svg class="vl-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M12 2 3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6l-9-4z"/><path d="m9 12 2 2 4-4"/></svg>
     <h3 class="vl-feature__title">Signed Copies</h3>
@@ -204,21 +227,265 @@
   </div>
 </section>
 
+
+<!-- ════════════════════════════════════════════════════════════
+     SPLIT HERO — cover beside a looping video (reference pattern)
+     ════════════════════════════════════════════════════════════ -->
+<section class="vl-split-hero" aria-label="Featured release">
+  <div class="vl-split-hero__grid" data-animate="fade-up">
+
+    <!-- The 3D book, synced to the video panel -->
+    <div class="vl-split-hero__cover">
+      <div class="vl-3d-book vl-3d-book--enter">
+        <div class="vl-3d-book__shadow"></div>
+        <div class="vl-3d-book__cover">
+          <div class="vl-3d-book__pages"></div>
+          <div class="vl-3d-book__face vl-3d-book__face--front">
+            <img src="assets/img/cover-velvet-vow.jpg" alt="Velvet Vow by Nocturne">
+          </div>
+          <div class="vl-3d-book__face vl-3d-book__face--back"></div>
+        </div>
+      </div>
+
+      <div style="position:absolute;bottom:22px;left:0;right:0;z-index:2;display:flex;justify-content:center;gap:10px">
+        <button class="vl-rail__btn" data-split-prev aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg>
+        </button>
+        <button class="vl-rail__btn" data-split-next aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- The video panel -->
+    <div class="vl-split-hero__media">
+      <div class="vl-split-hero__slide is-active" data-cover="assets/img/cover-velvet-vow.jpg">
+        <img src="assets/img/hero-1.jpg" alt="A figure in an oxblood gown at a rain-streaked window">
+      </div>
+      <div class="vl-split-hero__slide" data-cover="assets/img/cover-hollow-church.jpg" hidden>
+        <img src="assets/img/hero-2.jpg" alt="A baroque mirror reflecting candlelight">
+      </div>
+      <div class="vl-split-hero__slide" data-cover="assets/img/cover-obsession.jpg" hidden>
+        <img src="assets/img/hero-3.jpg" alt="Rain on a window with city lights beyond">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     FEATURED TITLES — 3D cover carousel
+     ════════════════════════════════════════════════════════════ -->
+<section class="vl-section">
+  <div class="vl-container">
+    <div class="vl-sect-head vl-sect-head--center" data-animate="fade-up">
+      <span class="vl-eyebrow vl-eyebrow--center">Featured Titles</span>
+      <h2>Hover a cover</h2>
+      <p class="vl-lede" style="margin-inline:auto">Every edition is hand-bound. Move your cursor across one and it will turn in your hand.</p>
+    </div>
+
+    <div class="vl-rail" data-animate="fade-up">
+      <div class="vl-rail__track">
+
+        <article class="vl-rail__item vl-product">
+          <div class="vl-product__stage">
+            <div class="vl-product__glow"></div>
+            <div class="vl-3d-book" data-tilt="6">
+              <div class="vl-3d-book__shadow"></div>
+              <div class="vl-3d-book__cover">
+                <div class="vl-3d-book__pages"></div>
+                <div class="vl-3d-book__face vl-3d-book__face--front">
+                  <img src="assets/img/cover-velvet-vow.jpg" alt="Velvet Vow cover">
+                </div>
+                <div class="vl-3d-book__face vl-3d-book__face--back"></div>
+              </div>
+            </div>
+          </div>
+          <div class="vl-book__body" style="text-align:center;padding-left:0;padding-right:0">
+            <p class="vl-book__series">Ashgate Series · One</p>
+            <h3 class="vl-book__title"><a href="book.html">Velvet Vow</a></h3>
+            <p class="vl-book__blurb">He bought the auction house to get one painting. He kept it to get her.</p>
+            <div class="vl-book__foot" style="justify-content:center">
+              <span class="vl-book__price">€14.99</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="vl-rail__item vl-product">
+          <div class="vl-product__stage">
+            <div class="vl-product__glow"></div>
+            <div class="vl-3d-book" data-tilt="6">
+              <div class="vl-3d-book__shadow"></div>
+              <div class="vl-3d-book__cover">
+                <div class="vl-3d-book__pages"></div>
+                <div class="vl-3d-book__face vl-3d-book__face--front">
+                  <img src="assets/img/cover-hollow-church.jpg" alt="The Hollow Church cover">
+                </div>
+                <div class="vl-3d-book__face vl-3d-book__face--back"></div>
+              </div>
+            </div>
+          </div>
+          <div class="vl-book__body" style="text-align:center;padding-left:0;padding-right:0">
+            <p class="vl-book__series">Ashgate Series · Two</p>
+            <h3 class="vl-book__title"><a href="book.html">The Hollow Church</a></h3>
+            <p class="vl-book__blurb">The bell only rings for the dead. On the seventh night, it rang for her.</p>
+            <div class="vl-book__foot" style="justify-content:center">
+              <span class="vl-book__price">€12.99</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="vl-rail__item vl-product">
+          <div class="vl-product__stage">
+            <div class="vl-product__glow"></div>
+            <div class="vl-3d-book" data-tilt="6">
+              <div class="vl-3d-book__shadow"></div>
+              <div class="vl-3d-book__cover">
+                <div class="vl-3d-book__pages"></div>
+                <div class="vl-3d-book__face vl-3d-book__face--front">
+                  <img src="assets/img/cover-obsession.jpg" alt="Obsession in Ink cover">
+                </div>
+                <div class="vl-3d-book__face vl-3d-book__face--back"></div>
+              </div>
+            </div>
+          </div>
+          <div class="vl-book__body" style="text-align:center;padding-left:0;padding-right:0">
+            <p class="vl-book__series">Standalone</p>
+            <h3 class="vl-book__title"><a href="book.html">Obsession in Ink</a></h3>
+            <p class="vl-book__blurb">A novelist and the editor who ruined her first manuscript.</p>
+            <div class="vl-book__foot" style="justify-content:center">
+              <span class="vl-book__price">€24.99</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="vl-rail__item vl-product">
+          <div class="vl-product__stage">
+            <div class="vl-product__glow"></div>
+            <div class="vl-3d-book" data-tilt="6">
+              <div class="vl-3d-book__shadow"></div>
+              <div class="vl-3d-book__cover">
+                <div class="vl-3d-book__pages"></div>
+                <div class="vl-3d-book__face vl-3d-book__face--front">
+                  <img src="assets/img/cover-signed.jpg" alt="Signed Editions collectible box">
+                </div>
+                <div class="vl-3d-book__face vl-3d-book__face--back"></div>
+              </div>
+            </div>
+          </div>
+          <div class="vl-book__body" style="text-align:center;padding-left:0;padding-right:0">
+            <p class="vl-book__series">Limited</p>
+            <h3 class="vl-book__title"><a href="book.html">Signed Editions</a></h3>
+            <p class="vl-book__blurb">Hand-bound, gilded edges, numbered to three hundred.</p>
+            <div class="vl-book__foot" style="justify-content:center">
+              <span class="vl-book__price">€39.99</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="vl-rail__item vl-product">
+          <div class="vl-product__stage">
+            <div class="vl-product__glow"></div>
+            <div class="vl-3d-book" data-tilt="6">
+              <div class="vl-3d-book__shadow"></div>
+              <div class="vl-3d-book__cover">
+                <div class="vl-3d-book__pages"></div>
+                <div class="vl-3d-book__face vl-3d-book__face--front">
+                  <img src="assets/img/cover-obsession.jpg" alt="Obsession in Ink paperback edition">
+                </div>
+                <div class="vl-3d-book__face vl-3d-book__face--back"></div>
+              </div>
+            </div>
+          </div>
+          <div class="vl-book__body" style="text-align:center;padding-left:0;padding-right:0">
+            <p class="vl-book__series">Hardback</p>
+            <h3 class="vl-book__title"><a href="book.html">Obsession in Ink</a></h3>
+            <p class="vl-book__blurb">The unabridged hardcover with the original letter epilogue.</p>
+            <div class="vl-book__foot" style="justify-content:center">
+              <span class="vl-book__price">€39.99</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="vl-rail__item vl-product">
+          <div class="vl-product__stage">
+            <div class="vl-product__glow"></div>
+            <div class="vl-3d-book" data-tilt="6">
+              <div class="vl-3d-book__shadow"></div>
+              <div class="vl-3d-book__cover">
+                <div class="vl-3d-book__pages"></div>
+                <div class="vl-3d-book__face vl-3d-book__face--front">
+                  <img src="assets/img/cover-hollow-church.jpg" alt="The Hollow Church limited edition">
+                </div>
+                <div class="vl-3d-book__face vl-3d-book__face--back"></div>
+              </div>
+            </div>
+          </div>
+          <div class="vl-book__body" style="text-align:center;padding-left:0;padding-right:0">
+            <p class="vl-book__series">Limited</p>
+            <h3 class="vl-book__title"><a href="book.html">Hollow Church №12</a></h3>
+            <p class="vl-book__blurb">One of three hundred. Numbered on the colophon in gold.</p>
+            <div class="vl-book__foot" style="justify-content:center">
+              <span class="vl-book__price">€49.99</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="vl-center" style="margin-top:clamp(30px,4vw,48px);display:flex;justify-content:center">
+      <div class="vl-rail__nav">
+        <button class="vl-rail__btn" data-rail-prev aria-label="Previous titles">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg>
+        </button>
+        <button class="vl-rail__btn" data-rail-next aria-label="Next titles">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     TICKER — a marquee of accolades
+     ════════════════════════════════════════════════════════════ -->
+<section style="padding-block:26px;border-block:1px solid var(--vl-line);background:var(--vl-ink-2);overflow:hidden">
+  <div class="vl-ticker" aria-hidden="true">
+    <div class="vl-ticker__row">
+      <span class="vl-ticker__item">Signed by the author</span>
+      <span class="vl-ticker__item">Gilded edges</span>
+      <span class="vl-ticker__item">Worldwide shipping</span>
+      <span class="vl-ticker__item">Instant e-book delivery</span>
+      <span class="vl-ticker__item">Numbered limited editions</span>
+      <span class="vl-ticker__item">Free reading sample</span>
+    </div>
+    <div class="vl-ticker__row" aria-hidden="true">
+      <span class="vl-ticker__item">Signed by the author</span>
+      <span class="vl-ticker__item">Gilded edges</span>
+      <span class="vl-ticker__item">Worldwide shipping</span>
+      <span class="vl-ticker__item">Instant e-book delivery</span>
+      <span class="vl-ticker__item">Numbered limited editions</span>
+      <span class="vl-ticker__item">Free reading sample</span>
+    </div>
+  </div>
+</section>
+
 <!-- ════════════════════════════════════════════════════════════
      BOOKS
      ════════════════════════════════════════════════════════════ -->
 <section class="vl-section" id="books">
   <div class="vl-container">
-    <div class="vl-sect-head vl-sect-head--center" data-reveal>
+    <div class="vl-sect-head vl-sect-head--center" data-animate="fade-up">
       <span class="vl-eyebrow vl-eyebrow--center">The Collection</span>
       <h2>Books that leave a mark</h2>
       <p class="vl-lede">Three novels. Three women who did not come out of it unchanged. Read the beginning of each one — free — before you decide.</p>
     </div>
 
-    <div class="vl-grid vl-grid--3">
+    <div class="vl-grid vl-grid--3" data-group="90">
 
       <!-- Book 1 -->
-      <article class="vl-book" data-reveal>
+      <article class="vl-book" data-animate="fade-up">
         <div class="vl-book__figure">
           <img src="assets/img/cover-velvet-vow.jpg" alt="Velvet Vow book cover — deep oxblood cover with gold filigree frame and a black rose" loading="lazy">
           <div class="vl-book__badges">
@@ -244,7 +511,7 @@
       </article>
 
       <!-- Book 2 -->
-      <article class="vl-book" data-reveal data-reveal-delay="1">
+      <article class="vl-book" data-animate="fade-up" data-delay="90">
         <div class="vl-book__figure">
           <img src="assets/img/cover-hollow-church.jpg" alt="The Hollow Church book cover — near-black cover with a gold candle in an arch" loading="lazy">
           <div class="vl-book__badges">
@@ -269,7 +536,7 @@
       </article>
 
       <!-- Book 3 -->
-      <article class="vl-book" data-reveal data-reveal-delay="2">
+      <article class="vl-book" data-animate="fade-up" data-delay="180">
         <div class="vl-book__figure">
           <img src="assets/img/cover-obsession.jpg" alt="Obsession in Ink book cover — plum-black cover with a gold fountain pen nib and black rose" loading="lazy">
           <div class="vl-book__badges">
@@ -295,7 +562,7 @@
 
     </div>
 
-    <div class="vl-center" style="margin-top:clamp(40px,5vw,64px)" data-reveal>
+    <div class="vl-center" style="margin-top:clamp(40px,5vw,64px)" data-animate="fade-up">
       <a href="#books" class="vl-btn vl-btn--ghost">Browse the full shelf</a>
     </div>
   </div>
@@ -309,14 +576,14 @@
 <section class="vl-section vl-section--alt" id="about">
   <div class="vl-container">
     <div class="vl-split">
-      <div class="vl-split__media" data-reveal>
+      <div class="vl-split__media" data-animate="fade-up">
         <img src="assets/img/author-portrait.jpg" alt="Nocturne in an oxblood velvet jacket, lit dramatically from one side" loading="lazy">
         <div class="vl-split__stat">
           <b><span data-count="42000">0</span>+</b>
           <span>Copies sold</span>
         </div>
       </div>
-      <div data-reveal data-reveal-delay="1">
+      <div data-animate="fade-up" data-delay="90">
         <span class="vl-eyebrow">The Author</span>
         <h2>Nocturne</h2>
         <p class="vl-lede">Dark romance for readers who like their love story with teeth.</p>
@@ -336,12 +603,12 @@
 <!-- ════════════════════════════════════════════════════════════
      PULL QUOTE
      ════════════════════════════════════════════════════════════ -->
-<section class="vl-section vl-section--tight">
+<section class="vl-quote-band">
   <div class="vl-container vl-container--narrow vl-center">
-    <blockquote class="vl-display-quote" data-reveal>
+    <blockquote class="vl-display-quote" data-animate="fade-up">
       He did not love her loudly. He loved her the way a man loves something he is not permitted to keep.
     </blockquote>
-    <p style="margin-top:28px;font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--vl-muted-2)" data-reveal>— Velvet Vow, Chapter One</p>
+    <cite data-animate="fade-up">Velvet Vow, Chapter One</cite>
   </div>
 </section>
 
@@ -350,15 +617,15 @@
      ════════════════════════════════════════════════════════════ -->
 <section class="vl-section vl-section--plum" id="journal">
   <div class="vl-container">
-    <div class="vl-sect-head" data-reveal>
+    <div class="vl-sect-head" data-animate="fade-up">
       <span class="vl-eyebrow">The Journal</span>
       <h2>Writing updates &amp; teasers</h2>
       <p>Behind the manuscripts, late-night research, and whatever is currently keeping me awake.</p>
     </div>
 
-    <div class="vl-grid vl-grid--3">
+    <div class="vl-grid vl-grid--3" data-group="90">
 
-      <article class="vl-post" data-reveal>
+      <article class="vl-post" data-animate="fade-up">
         <div class="vl-post__figure">
           <img src="assets/img/blog-cover.jpg" alt="An antique writing desk at night with a fountain pen and a burning candle" loading="lazy">
         </div>
@@ -370,7 +637,7 @@
         </div>
       </article>
 
-      <article class="vl-post" data-reveal data-reveal-delay="1">
+      <article class="vl-post" data-animate="fade-up" data-delay="90">
         <div class="vl-post__figure">
           <img src="assets/img/hero-3.jpg" alt="Rain on a window with blurred city lights at night" loading="lazy">
         </div>
@@ -382,7 +649,7 @@
         </div>
       </article>
 
-      <article class="vl-post" data-reveal data-reveal-delay="2">
+      <article class="vl-post" data-animate="fade-up" data-delay="180">
         <div class="vl-post__figure">
           <img src="assets/img/hero-2.jpg" alt="A baroque mirror reflecting candlelight in a shadowed room" loading="lazy">
         </div>
@@ -403,14 +670,14 @@
      ════════════════════════════════════════════════════════════ -->
 <section class="vl-news vl-section">
   <div class="vl-container">
-    <div class="vl-news__inner" data-reveal>
+    <div class="vl-news__inner" data-animate="fade-up">
       <span class="vl-eyebrow vl-eyebrow--center">The List</span>
       <h2>Be first to read the next one</h2>
       <p class="vl-lede" style="margin-inline:auto">New chapters, release dates, and the occasional note from a very cold desk at four in the morning. No noise. Unsubscribe whenever.</p>
       <form class="vl-news__form" data-vl-form novalidate>
         <label class="vl-sr" for="nl-email">Email address</label>
         <input type="email" id="nl-email" name="email" placeholder="your@email.com" required>
-        <button class="vl-btn" type="submit">Subscribe</button>
+        <button class="vl-btn vl-btn--gold" type="submit">Subscribe</button>
         <div class="vl-field__error" style="flex-basis:100%"></div>
       </form>
       <p class="vl-news__note" data-form-status>Join <span data-count="12800">0</span>+ readers on the list.</p>
@@ -423,12 +690,12 @@
      ════════════════════════════════════════════════════════════ -->
 <section class="vl-section" id="faq">
   <div class="vl-container vl-container--narrow">
-    <div class="vl-sect-head vl-sect-head--center" data-reveal>
+    <div class="vl-sect-head vl-sect-head--center" data-animate="fade-up">
       <span class="vl-eyebrow vl-eyebrow--center">Before You Ask</span>
       <h2>Questions, answered plainly</h2>
     </div>
 
-    <div data-accordion data-reveal>
+    <div data-accordion data-animate="fade-up">
       <div class="vl-faq is-open" style="border-bottom:1px solid var(--vl-line)">
         <button class="vl-faq__q" style="width:100%;text-align:left;background:none;border:0;padding:22px 0;cursor:pointer;color:var(--vl-ivory);font-family:var(--vl-font-display);font-size:1.16rem;display:flex;justify-content:space-between;align-items:center;gap:20px">
           Do you ship internationally?
@@ -475,10 +742,10 @@
 <section class="vl-section vl-section--alt" id="contact">
   <div class="vl-container">
     <div class="vl-split vl-split--reverse">
-      <div class="vl-split__media" data-reveal>
+      <div class="vl-split__media" data-animate="fade-up">
         <img src="assets/img/hero-2.jpg" alt="Candlelight in a shadowed room with dried black roses" loading="lazy">
       </div>
-      <div data-reveal data-reveal-delay="1">
+      <div data-animate="fade-up" data-delay="90">
         <span class="vl-eyebrow">Contact</span>
         <h2>Write to me</h2>
         <p class="vl-lede">Press, rights, reviews, or just to tell me which chapter broke you.</p>
@@ -534,15 +801,12 @@
     <div class="vl-footer__grid">
       <div>
         <a href="#top" class="vl-brand">
-          <svg class="vl-brand__mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <circle cx="24" cy="24" r="22.5" stroke="#C9A227" stroke-width="1" opacity=".55"/>
-            <path d="M24 33c-4.5-2.6-7-6.2-7-9.9 0-3 2-5.3 4.6-5.3 1.7 0 3 1 3.7 2.4.7-1.4 2-2.4 3.7-2.4 2.6 0 4.6 2.3 4.6 5.3 0 3.7-2.5 7.3-7 9.9z" fill="#8A1F2E"/>
-            <path d="M24 33V17" stroke="#C9A227" stroke-width="1.1" stroke-linecap="round"/>
-            <path d="M24 24.5 20 21M24 21l4-3.5" stroke="#C9A227" stroke-width=".9" stroke-linecap="round"/>
-          </svg>
+          <span class="vl-brand__crest">
+            <img src="assets/img/client/logo-ci-transparent.png" alt="">
+          </span>
           <span class="vl-brand__text">
-            <span class="vl-brand__name">Nocturne</span>
-            <span class="vl-brand__tag">Vane &nbsp;·&nbsp; Author</span>
+            <span class="vl-brand__name">CHRISTIANA CIOCAN</span>
+            <span class="vl-brand__tag">Imperiul Umbrelor &nbsp;·&nbsp; Autoare</span>
           </span>
         </a>
         <p class="vl-footer__about">Dark romance for readers who like their love story with teeth. Written at night, in the rain, mostly with too much coffee.</p>
@@ -591,7 +855,7 @@
     </div>
 
     <div class="vl-footer__bar">
-      <p style="margin:0">© <span id="year">2026</span> Nocturne. All rights reserved.</p>
+      <p style="margin:0">© <span id="year">2026</span> Christiana Ciocan — Autoare. Toate drepturile rezervate.</p>
       <nav class="vl-footer__legal" aria-label="Legal">
         <a href="#">Privacy policy</a>
         <a href="#">Terms &amp; conditions</a>
@@ -642,6 +906,7 @@
 </div>
 
 <script src="assets/js/nocturne.js"></script>
+<script src="assets/js/effects.js"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

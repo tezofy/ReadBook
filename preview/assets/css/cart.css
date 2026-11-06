@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VELORIA — Cart Drawer + Supplementals
+   NOCTURNE — Cart Drawer + Supplementals
    Appended module (kept separate so it can be dropped into the WordPress
    child theme as its own asset).
    ========================================================================== */
@@ -50,14 +50,33 @@
   position: relative;
   border-radius: var(--vl-radius-lg);
   overflow: hidden;
-  background: var(--vl-plum);
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(138,31,46,.22), transparent 68%),
+    var(--vl-plum);
   box-shadow: var(--vl-shadow-lg);
   aspect-ratio: 2 / 3;
+  display: grid;
+  place-items: center;
 }
-.vl-gallery__main img {
+.vl-gallery__main > img {
   width: 100%; height: 100%;
   object-fit: cover;
   transition: opacity .3s var(--vl-ease);
+}
+/* The cover inside the 3D book must keep its own geometry. */
+.vl-gallery__main .vl-3d-book__face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* The 3D cover sits centred inside the gallery panel. */
+.vl-gallery__main .vl-3d-book {
+  /* NOTE: a percentage length cannot be multiplied inside calc(), so the
+     depth is expressed in px. calc(clamp(...) * 0.2) is invalid CSS and
+     silently drops the whole transform on the book faces. */
+  --book-w: clamp(150px, 42%, 250px);
+  --book-h: calc(var(--book-w) * 1.47);
+  --book-depth: 40px;
 }
 .vl-gallery__thumbs { display: flex; gap: 12px; }
 .vl-gallery__thumb {
