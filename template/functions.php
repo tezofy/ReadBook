@@ -17,6 +17,9 @@ define( 'NOCTURNE_VERSION', '1.0.0' );
 define( 'NOCTURNE_DIR', get_stylesheet_directory() );
 define( 'NOCTURNE_URI', get_stylesheet_directory_uri() );
 
+require_once NOCTURNE_DIR . '/inc/shortcodes.php';
+require_once NOCTURNE_DIR . '/inc/client-shortcodes.php';
+
 /* -------------------------------------------------------------------------
  * 1. ENQUEUE
  * ---------------------------------------------------------------------- */
@@ -27,8 +30,21 @@ function nocturne_enqueue() {
 
 	wp_enqueue_style( 'nocturne', NOCTURNE_URI . '/assets/css/nocturne.css', array( $parent_css ), NOCTURNE_VERSION );
 	wp_enqueue_style( 'nocturne-modules', NOCTURNE_URI . '/assets/css/modules.css', array( 'nocturne' ), NOCTURNE_VERSION );
+	wp_enqueue_style( 'nocturne-effects', NOCTURNE_URI . '/assets/css/effects.css', array( 'nocturne' ), NOCTURNE_VERSION );
+	wp_enqueue_style( 'nocturne-parchment', NOCTURNE_URI . '/assets/css/parchment.css', array( 'nocturne-effects' ), NOCTURNE_VERSION );
+	wp_enqueue_style( 'nocturne-client', NOCTURNE_URI . '/assets/css/client.css', array( 'nocturne-parchment' ), NOCTURNE_VERSION );
+
+	wp_enqueue_style(
+		'nocturne-fonts',
+		'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Lora:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap',
+		array(),
+		null
+	);
 
 	wp_enqueue_script( 'nocturne', NOCTURNE_URI . '/assets/js/nocturne.js', array(), NOCTURNE_VERSION, true );
+	wp_enqueue_script( 'nocturne-effects', NOCTURNE_URI . '/assets/js/effects.js', array( 'nocturne' ), NOCTURNE_VERSION, true );
+	wp_enqueue_script( 'nocturne-client-data', NOCTURNE_URI . '/assets/js/client-data.js', array(), NOCTURNE_VERSION, true );
+	wp_enqueue_script( 'nocturne-client', NOCTURNE_URI . '/assets/js/client.js', array( 'nocturne-client-data', 'nocturne-effects' ), NOCTURNE_VERSION, true );
 	wp_localize_script(
 		'nocturne',
 		'nocturneData',
@@ -99,12 +115,12 @@ function nocturne_customizer( $wp_customize ) {
 	);
 
 	$colors = array(
-		'vl_ink'      => array( '#0B0A0D', __( 'Base background (ink)', 'nocturne' ) ),
-		'vl_charcoal' => array( '#17151B', __( 'Card surface (charcoal)', 'nocturne' ) ),
-		'vl_ivory'    => array( '#F4EFE6', __( 'Primary text (ivory)', 'nocturne' ) ),
-		'vl_muted'    => array( '#A79FB2', __( 'Secondary text (muted)', 'nocturne' ) ),
-		'vl_oxblood'  => array( '#8A1F2E', __( 'Accent one (oxblood)', 'nocturne' ) ),
-		'vl_gold'     => array( '#C9A227', __( 'Accent two (antique gold)', 'nocturne' ) ),
+		'vl_ink'      => array( '#0E0E10', __( 'Base background (ink)', 'nocturne' ) ),
+		'vl_charcoal' => array( '#1A0F12', __( 'Card surface (charcoal)', 'nocturne' ) ),
+		'vl_ivory'    => array( '#F2EDE3', __( 'Primary text (parchment)', 'nocturne' ) ),
+		'vl_muted'    => array( '#5A7A7A', __( 'Secondary text (copper)', 'nocturne' ) ),
+		'vl_oxblood'  => array( '#6E1A2B', __( 'Accent one (burgundy)', 'nocturne' ) ),
+		'vl_gold'     => array( '#C9A86A', __( 'Accent two (antique gold)', 'nocturne' ) ),
 	);
 
 	foreach ( $colors as $id => $data ) {
@@ -145,6 +161,25 @@ function nocturne_customizer( $wp_customize ) {
 			'description' => __( 'One slide per line, using the format:<br><code>Image URL | Video URL | Kicker | Title | Excerpt | Button label | Button URL</code><br>Leave the video URL blank for an image slide.', 'nocturne' ),
 		)
 	);
+
+	// The split hero — a 3D cover beside a looping video.
+	$wp_customize->add_setting(
+		'vl_split_slides',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'wp_kses_post',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'vl_split_slides',
+		array(
+			'label'       => __( 'Split hero slides', 'nocturne' ),
+			'section'     => 'nocturne_design',
+			'type'        => 'textarea',
+			'description' => __( 'The split hero shows a 3D book cover beside a looping video. One slide per line, using the format:<br><code>Image URL | Video URL | Title | Excerpt | Cover URL</code><br>The Cover URL is the book cover that stands up in 3D on the left. Leave it blank to reuse the Image URL.', 'nocturne' ),
+		)
+	);
 }
 add_action( 'customize_register', 'nocturne_customizer' );
 
@@ -152,12 +187,12 @@ add_action( 'customize_register', 'nocturne_customizer' );
  * Write the chosen colours into an inline <style> block.
  */
 function nocturne_inline_css() {
-	$ink      = get_theme_mod( 'vl_ink', '#0B0A0D' );
-	$charcoal = get_theme_mod( 'vl_charcoal', '#17151B' );
-	$ivory    = get_theme_mod( 'vl_ivory', '#F4EFE6' );
-	$muted    = get_theme_mod( 'vl_muted', '#A79FB2' );
-	$oxblood  = get_theme_mod( 'vl_oxblood', '#8A1F2E' );
-	$gold     = get_theme_mod( 'vl_gold', '#C9A227' );
+	$ink      = get_theme_mod( 'vl_ink', '#0E0E10' );
+	$charcoal = get_theme_mod( 'vl_charcoal', '#1A0F12' );
+	$ivory    = get_theme_mod( 'vl_ivory', '#F2EDE3' );
+	$muted    = get_theme_mod( 'vl_muted', '#5A7A7A' );
+	$oxblood  = get_theme_mod( 'vl_oxblood', '#6E1A2B' );
+	$gold     = get_theme_mod( 'vl_gold', '#C9A86A' );
 	?>
 	<style id="nocturne-vars">
 		:root{

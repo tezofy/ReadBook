@@ -1,0 +1,782 @@
+/* ==========================================================================
+   NOCTURNE — Effects Engine
+   --------------------------------------------------------------------------
+   A self-contained scroll-reveal and micro-interaction system.
+
+   Inspired by the reveal-on-scroll pattern used by premium WooCommerce
+   themes, but built from scratch with the Nocturne motion tokens so it
+   feels native to the design system rather than bolted on.
+
+   USAGE
+     <div data-animate="fade-up" data-delay="120" data-duration="900">
+     <div data-animate="fade-up" data-group="1">   ← stagger within a group
+     <div data-animate="book" data-tilt="true">   ← 3D cover tilt
+
+   Available effects (see §2 for the full list):
+     fade · fade-up · fade-down · fade-left · fade-right
+     zoom-in · zoom-out · slide-up · slide-down
+     blur-in · flip-y · reveal-mask · text-entrance · letter-stagger
+
+   No dependencies. No build step. ~9 KB.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+  --vl-anim-duration: 900ms;
+  --vl-anim-delay: 0ms;
+  --vl-anim-ease: cubic-bezier(.16, 1, .3, 1);
+  --vl-anim-ease-soft: cubic-bezier(.22, .61, .36, 1);
+  --vl-anim-distance: 34px;
+  --vl-stagger: 90ms;
+}
+
+/* --------------------------------------------------------------------------
+   2. EFFECTS
+   Each effect sets the "from" state. The .is-in class removes it.
+   -------------------------------------------------------------------------- */
+
+/* --- Fades --- */
+[data-animate="fade"] {
+  opacity: 0;
+  transition: opacity var(--vl-anim-duration) var(--vl-anim-ease-soft) var(--vl-anim-delay);
+}
+[data-animate="fade"].is-in { opacity: 1; }
+
+[data-animate="fade-up"] {
+  opacity: 0;
+  transform: translate3d(0, var(--vl-anim-distance), 0);
+  transition:
+    opacity var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay),
+    transform var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay);
+}
+[data-animate="fade-up"].is-in { opacity: 1; transform: none; }
+
+[data-animate="fade-down"] {
+  opacity: 0;
+  transform: translate3d(0, calc(var(--vl-anim-distance) * -1), 0);
+  transition:
+    opacity var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay),
+    transform var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay);
+}
+[data-animate="fade-down"].is-in { opacity: 1; transform: none; }
+
+[data-animate="fade-left"] {
+  opacity: 0;
+  transform: translate3d(var(--vl-anim-distance), 0, 0);
+  transition:
+    opacity var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay),
+    transform var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay);
+}
+[data-animate="fade-left"].is-in { opacity: 1; transform: none; }
+
+[data-animate="fade-right"] {
+  opacity: 0;
+  transform: translate3d(calc(var(--vl-anim-distance) * -1), 0, 0);
+  transition:
+    opacity var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay),
+    transform var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay);
+}
+[data-animate="fade-right"].is-in { opacity: 1; transform: none; }
+
+/* --- Zooms --- */
+[data-animate="zoom-in"] {
+  opacity: 0;
+  transform: scale(.88);
+  transition:
+    opacity var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay),
+    transform var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay);
+}
+[data-animate="zoom-in"].is-in { opacity: 1; transform: none; }
+
+[data-animate="zoom-out"] {
+  opacity: 0;
+  transform: scale(1.08);
+  transition:
+    opacity var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay),
+    transform var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay);
+}
+[data-animate="zoom-out"].is-in { opacity: 1; transform: none; }
+
+/* --- Slides (no fade — pure movement) --- */
+[data-animate="slide-up"] {
+  opacity: 0;
+  transform: translate3d(0, 60px, 0);
+  transition: transform var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay);
+}
+[data-animate="slide-up"].is-in { opacity: 1; transform: none; }
+
+[data-animate="slide-down"] {
+  opacity: 0;
+  transform: translate3d(0, -60px, 0);
+  transition: transform var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay);
+}
+[data-animate="slide-down"].is-in { opacity: 1; transform: none; }
+
+/* --- Blur in — soft, editorial --- */
+[data-animate="blur-in"] {
+  opacity: 0;
+  filter: blur(14px);
+  transform: scale(1.04);
+  transition:
+    opacity var(--vl-anim-duration) var(--vl-anim-ease-soft) var(--vl-anim-delay),
+    filter var(--vl-anim-duration) var(--vl-anim-ease-soft) var(--vl-anim-delay),
+    transform var(--vl-anim-duration) var(--vl-anim-ease-soft) var(--vl-anim-delay);
+}
+[data-animate="blur-in"].is-in { opacity: 1; filter: blur(0); transform: none; }
+
+/* --- 3D flip on the Y axis — for cover art --- */
+[data-animate="flip-y"] {
+  opacity: 0;
+  transform: perspective(900px) rotateY(-42deg);
+  transform-origin: left center;
+  transition:
+    opacity var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay),
+    transform var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay);
+}
+[data-animate="flip-y"].is-in { opacity: 1; transform: perspective(900px) rotateY(0deg); }
+
+/* --- Mask reveal — the clip-path wipe --- */
+[data-animate="reveal-mask"] {
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  transition:
+    opacity 200ms linear var(--vl-anim-delay),
+    clip-path var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay);
+}
+[data-animate="reveal-mask"].is-in { opacity: 1; clip-path: inset(0 0 0 0); }
+
+/* --- Text entrance — a mask wipe on the type itself --- */
+[data-animate="text-entrance"] {
+  opacity: 0;
+  transform: translate3d(0, .5em, 0);
+  overflow: hidden;
+  transition:
+    opacity var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay),
+    transform var(--vl-anim-duration) var(--vl-anim-ease) var(--vl-anim-delay);
+}
+[data-animate="text-entrance"].is-in { opacity: 1; transform: none; }
+
+/* --- Letter stagger — set on the parent, applied to the children --- */
+[data-animate="letter-stagger"] > * {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, .6em, 0) rotateX(-45deg);
+  transform-origin: 50% 100%;
+  transition:
+    opacity 700ms var(--vl-anim-ease) calc(var(--vl-anim-delay) + var(--i, 0) * 60ms),
+    transform 700ms var(--vl-anim-ease) calc(var(--vl-anim-delay) + var(--i, 0) * 60ms);
+}
+[data-animate="letter-stagger"].is-in > * { opacity: 1; transform: none; }
+
+/* --------------------------------------------------------------------------
+   3. THE 3D BOOK COVER  ⭐ signature effect
+   A book that leans away in 3D and flattens when you hover it — the
+   cover, the page block (the striped edge) and the back cover are
+   built from a single element and its pseudo-elements.
+   -------------------------------------------------------------------------- */
+.vl-3d-book {
+  --book-w: 200px;
+  --book-h: 293px;
+  --book-depth: 40.5px;
+
+  position: relative;
+  width: var(--book-w);
+  height: var(--book-h);
+  transform-style: preserve-3d;
+  /* The perspective lives on the wrapper so the book itself can rotate
+     freely without its children inheriting the vanishing point. */
+  perspective: 600px;
+}
+
+/* The rotating element. */
+.vl-3d-book__cover {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(-30deg);
+  transition: transform 1s var(--vl-anim-ease);
+  will-change: transform;
+}
+
+.vl-3d-book:hover .vl-3d-book__cover,
+.vl-3d-book:focus-within .vl-3d-book__cover { transform: rotateY(0deg); }
+
+/* The front cover art, pushed towards the viewer. */
+.vl-3d-book__face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--book-w);
+  height: var(--book-h);
+  transform: translateZ(var(--book-depth));
+  border-radius: 0 3px 3px 0;
+  overflow: hidden;
+  background: #01060f;
+  box-shadow: 5px 5px 20px rgba(0,0,0,.85);
+}
+.vl-3d-book__face img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* The back cover — dark, sits behind, throws the deep shadow. */
+.vl-3d-book__face--back {
+  transform: translateZ(calc(var(--book-depth) * -1));
+  box-shadow: -10px 0 50px 10px rgba(0,0,0,.85);
+  /* Only a sliver of the back board should show past the fore-edge. */
+  opacity: .96;
+}
+
+/* The page block — the striped edge of the book, rotated onto the right side.
+   The reference offsets it with translateX so the pages meet the spine. */
+.vl-3d-book__pages {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: var(--book-depth);
+  height: calc(var(--book-h) - 6px);
+  /* Slide the block to the spine, then rotate it flat against the fore-edge
+     so the striped page edge reads as a solid block of paper. */
+  transform: translateX(calc(var(--book-w) - 1px)) rotateY(90deg);
+  transform-origin: left center;
+  background: linear-gradient(90deg,
+    #fff 0%, #f9f9f9 5%, #fff 10%, #f9f9f9 15%,
+    #fff 20%, #f9f9f9 25%, #fff 30%, #f9f9f9 35%,
+    #fff 40%, #f9f9f9 45%, #fff 50%, #f9f9f9 55%,
+    #fff 60%, #f9f9f9 65%, #fff 70%, #f9f9f9 75%,
+    #fff 80%, #f9f9f9 85%, #fff 90%, #f9f9f9 95%, #fff 100%);
+  box-shadow: inset 0 0 8px rgba(0,0,0,.4);
+}
+
+/* A soft shadow the book casts onto the surface */
+.vl-3d-book__shadow {
+  position: absolute;
+  left: 6%;
+  bottom: -18px;
+  width: 88%;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,.62), transparent 70%);
+  filter: blur(6px);
+  transform: scaleX(.7);
+  pointer-events: none;
+}
+
+/* Entrance animation — the book swings into place on first paint. */
+.vl-3d-book--enter .vl-3d-book__cover {
+  animation: vl-book-enter 1.1s var(--vl-anim-ease) both;
+}
+@keyframes vl-book-enter {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(-30deg); }
+}
+
+@media (max-width: 768px) {
+  .vl-3d-book {
+    --book-w: 148px;
+    --book-h: 216px;
+    --book-depth: 30px;
+  }
+}
+@media (max-width: 420px) {
+  .vl-3d-book {
+    --book-w: 126px;
+    --book-h: 184px;
+    --book-depth: 26px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. SPLIT HERO — cover on one side, video on the other
+   Mirrors the reference pattern: a 4/8 split where the book cover
+   sits beside a looping video.
+   -------------------------------------------------------------------------- */
+.vl-split-hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--vl-ink);
+}
+.vl-split-hero__grid {
+  display: grid;
+  grid-template-columns: 4fr 8fr;
+  align-items: stretch;
+  min-height: clamp(420px, 62vh, 680px);
+}
+.vl-split-hero__cover {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 40px 20px;
+  background: linear-gradient(160deg, var(--vl-charcoal), var(--vl-ink-2));
+  border-right: 1px solid var(--vl-line);
+  overflow: hidden;
+}
+.vl-split-hero__cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 55%, rgba(138,31,46,.20), transparent 62%);
+  pointer-events: none;
+}
+.vl-split-hero__media {
+  position: relative;
+  overflow: hidden;
+  background: var(--vl-plum);
+}
+/* Only the active slide is visible; the others are stacked underneath. */
+.vl-split-hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .9s var(--vl-ease-out), visibility .9s;
+}
+.vl-split-hero__slide.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+.vl-split-hero__media img,
+.vl-split-hero__media video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.vl-split-hero__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(11,10,13,.55) 0%, transparent 38%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* The 3D book in the cover panel needs room to turn. */
+.vl-split-hero__cover .vl-3d-book {
+  --book-w: clamp(180px, 15vw, 250px);
+  --book-h: calc(var(--book-w) * 1.47);
+  --book-depth: calc(var(--book-w) * 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .vl-split-hero__grid {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .vl-split-hero__cover { padding: 40px 0 32px; border-right: 0; border-bottom: 1px solid var(--vl-line); }
+  .vl-split-hero__media { aspect-ratio: 4 / 5; }
+}
+
+/* --------------------------------------------------------------------------
+   6. PRODUCT CAROUSEL — horizontal rail with arrows
+   A CSS-only scroll rail with snap points. No library.
+   -------------------------------------------------------------------------- */
+.vl-rail {
+  position: relative;
+}
+/* The track is a scroll viewport. Its width is capped so that the number of
+   items that fit is always fewer than the number of items present — which is
+   what makes the rail read as scrollable and gives the arrows something to do.
+   The negative margin + matching padding lets the first card sit flush with
+   the page gutter while the track still bleeds to the edge. */
+.vl-rail__track {
+  display: flex;
+  gap: clamp(16px, 2vw, 32px);
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 8px 0 20px;
+  margin-inline: calc(var(--vl-gutter) * -1);
+  padding-inline: var(--vl-gutter);
+}
+.vl-rail__track::-webkit-scrollbar { display: none; }
+
+/* Each card takes a share of the viewport. Because the basis is a fraction
+   of the track width and the track is wider than the page, the final card is
+   always pushed past the fold — the rail always reads as scrollable and the
+   arrows always have somewhere to go. */
+.vl-rail__item {
+  flex: 0 0 auto;
+  width: clamp(230px, 26vw, 320px);
+}
+
+@media (min-width: 1100px) {
+  .vl-rail__item { width: calc((100vw - 4 * clamp(16px, 2vw, 32px)) / 5); }
+}
+@media (min-width: 700px) and (max-width: 1099px) {
+  .vl-rail__item { width: calc((100vw - 3 * clamp(16px, 2vw, 32px)) / 4); }
+}
+
+.vl-rail__nav {
+  display: flex;
+  gap: 10px;
+}
+.vl-rail__btn {
+  width: 46px; height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--vl-line-gold);
+  border-radius: 99px;
+  background: rgba(11,10,13,.45);
+  backdrop-filter: blur(8px);
+  color: var(--vl-ivory);
+  cursor: pointer;
+  transition: background .3s var(--vl-anim-ease), border-color .3s var(--vl-anim-ease), transform .3s var(--vl-anim-ease);
+}
+.vl-rail__btn:hover { background: var(--vl-oxblood); border-color: var(--vl-oxblood-lt); transform: translateY(-2px); }
+.vl-rail__btn:disabled { opacity: .3; cursor: default; transform: none; background: rgba(11,10,13,.45); }
+.vl-rail__btn svg { width: 16px; height: 16px; }
+
+/* --------------------------------------------------------------------------
+   7. MAGNETIC / TILT BUTTONS
+   A subtle 3D tilt that follows the cursor.
+   -------------------------------------------------------------------------- */
+.vl-tilt {
+  transform-style: preserve-3d;
+  transition: transform .5s var(--vl-anim-ease);
+  will-change: transform;
+}
+.vl-tilt.is-tilting { transition: transform .12s linear; }
+
+/* --------------------------------------------------------------------------
+   8. PARALLAX LAYERS
+   Data-parallax="0.2" — moves slower than the scroll.
+   -------------------------------------------------------------------------- */
+[data-parallax] {
+  will-change: transform;
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+}
+
+/* --------------------------------------------------------------------------
+   9. COUNTER / TICKER
+   -------------------------------------------------------------------------- */
+.vl-ticker {
+  display: flex;
+  gap: 0;
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.vl-ticker__row {
+  display: flex;
+  gap: 56px;
+  flex: none;
+  animation: vl-ticker 32s linear infinite;
+}
+.vl-ticker:hover .vl-ticker__row { animation-play-state: paused; }
+@keyframes vl-ticker {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.vl-ticker__item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--vl-font-display);
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  color: var(--vl-ivory);
+  white-space: nowrap;
+}
+.vl-ticker__item::before {
+  content: '◆';
+  font-size: 8px;
+  color: var(--vl-gold);
+}
+
+/* --------------------------------------------------------------------------
+   10. REDUCED MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  .vl-3d-book__cover,
+  .vl-3d-book--enter .vl-3d-book__cover {
+    animation: none !important;
+    transform: rotateY(-14deg);
+  }
+  .vl-ticker__row { animation: none; }
+  .vl-rail__track { scroll-behavior: auto; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   STICKY-SHRINK HEADER
+   Mirrors the reference pattern: the bar condenses after 10px of scroll,
+   the logo swaps to a smaller lockup, and the nav collapses into pills.
+   ══════════════════════════════════════════════════════════════════════ */
+.vl-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 200;
+  background: linear-gradient(180deg, rgba(11,10,13,.96) 0%, rgba(11,10,13,.88) 60%, rgba(11,10,13,0) 100%);
+  /* No backdrop-filter here on purpose: it would create a containing block
+     and trap the fixed-position mobile navigation drawer inside the header. */
+  border-bottom: 1px solid transparent;
+  transition: background .45s var(--vl-ease-out), border-color .45s var(--vl-ease-out),
+              box-shadow .45s var(--vl-ease-out), padding .35s var(--vl-ease-out);
+}
+.vl-header.is-stuck {
+  background: rgba(11,10,13,.97);
+  border-bottom-color: var(--vl-line);
+  box-shadow: 0 10px 34px rgba(0,0,0,.55);
+}
+
+/* The inner row shrinks with the bar. */
+.vl-header__inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 26px);
+  height: 96px;
+  padding-inline: var(--vl-gutter);
+  max-width: 1400px;
+  margin-inline: auto;
+  transition: height .35s var(--vl-ease-out);
+}
+.vl-header.is-stuck .vl-header__inner { height: 70px; }
+
+/* ── Logo lockup ─────────────────────────────────────────────────── */
+.vl-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex: 0 0 auto;
+  transition: gap .35s var(--vl-ease-out);
+}
+.vl-brand__logo {
+  display: inline-flex;
+  width: 52px;
+  height: 52px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(201,162,39,.28);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, rgba(138,31,46,.34), transparent 70%);
+  transition: width .35s var(--vl-ease-out), height .35s var(--vl-ease-out);
+}
+.vl-header.is-stuck .vl-brand__logo { width: 38px; height: 38px; }
+.vl-brand__mark { width: 74%; height: 74%; }
+
+.vl-brand__text { display: grid; line-height: 1.1; }
+.vl-brand__name {
+  font-family: var(--vl-font-display);
+  font-size: 1.32rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--vl-ivory);
+  transition: font-size .35s var(--vl-ease-out), opacity .3s var(--vl-ease-out);
+}
+.vl-header.is-stuck .vl-brand__name { font-size: 1.02rem; }
+.vl-brand__tag {
+  font-size: .58rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--vl-muted);
+  transition: opacity .3s var(--vl-ease-out), max-height .3s var(--vl-ease-out), margin .3s var(--vl-ease-out);
+  max-height: 20px;
+}
+.vl-header.is-stuck .vl-brand__tag { opacity: 0; max-height: 0; margin-top: 0; }
+
+/* ── Trust badge ─────────────────────────────────────────────────── */
+.vl-header__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid rgba(201,162,39,.3);
+  border-radius: 999px;
+  background: rgba(201,162,39,.07);
+  color: var(--vl-gold);
+  font-size: .58rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .3s var(--vl-ease-out), border-color .3s var(--vl-ease-out);
+}
+.vl-header__badge:hover { background: rgba(201,162,39,.14); border-color: rgba(201,162,39,.55); }
+.vl-header__badge svg { width: 16px; height: 16px; flex: 0 0 auto; }
+@media (max-width: 1180px) { .vl-header__badge { display: none; } }
+
+/* ── Pill navigation ─────────────────────────────────────────────── */
+.vl-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-inline: auto;
+}
+.vl-nav > li,
+.vl-nav > a,
+.vl-nav .vl-nav__link {
+  position: relative;
+}
+.vl-nav__link,
+.vl-nav li > a {
+  display: inline-block;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: .66rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--vl-ivory);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .3s var(--vl-ease-out), background .3s var(--vl-ease-out);
+}
+.vl-nav__link:hover,
+.vl-nav li > a:hover,
+.vl-nav li.current-menu-item > a,
+.vl-nav li.current-menu-parent > a {
+  color: var(--vl-ivory);
+  background: rgba(201,162,39,.12);
+}
+/* Underline that grows from the centre. */
+.vl-nav__link::after,
+.vl-nav li > a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 0;
+  height: 1px;
+  background: var(--vl-gold);
+  transform: translateX(-50%);
+  transition: width .35s var(--vl-ease-out);
+}
+.vl-nav__link:hover::after,
+.vl-nav li > a:hover::after { width: calc(100% - 36px); }
+
+/* Dropdown panels */
+.vl-nav ul {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  min-width: 210px;
+  padding: 8px;
+  margin: 0;
+  list-style: none;
+  background: rgba(23,21,27,.98);
+  border: 1px solid var(--vl-line);
+  border-radius: 12px;
+  box-shadow: 0 22px 50px rgba(0,0,0,.6);
+  transform: translate(-50%, 10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .28s var(--vl-ease-out), transform .28s var(--vl-ease-out), visibility .28s;
+}
+.vl-nav li:hover > ul,
+.vl-nav li:focus-within > ul {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+.vl-nav ul li a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--vl-muted);
+  text-decoration: none;
+  transition: color .25s, background .25s;
+}
+.vl-nav ul li a:hover { color: var(--vl-ivory); background: rgba(201,162,39,.1); }
+
+/* ── Search ──────────────────────────────────────────────────────── */
+.vl-search {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.vl-search__icon {
+  position: absolute;
+  left: 12px;
+  width: 15px;
+  height: 15px;
+  color: var(--vl-muted);
+  pointer-events: none;
+}
+.vl-search input {
+  width: 190px;
+  padding: 9px 14px 9px 34px;
+  border: 1px solid var(--vl-line);
+  border-radius: 999px;
+  background: rgba(255,255,255,.03);
+  color: var(--vl-ivory);
+  font-family: inherit;
+  font-size: .68rem;
+  letter-spacing: .08em;
+  transition: width .4s var(--vl-ease-out), border-color .3s, background .3s;
+}
+.vl-search input::placeholder { color: var(--vl-muted); }
+.vl-search input:focus {
+  width: 240px;
+  outline: none;
+  border-color: rgba(201,162,39,.5);
+  background: rgba(255,255,255,.06);
+}
+@media (max-width: 1320px) { .vl-search input { width: 150px; } }
+@media (max-width: 1100px) { .vl-search { display: none; } }
+
+/* ── Mobile ──────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .vl-header__inner { height: 70px; }
+  .vl-header.is-stuck .vl-header__inner { height: 64px; }
+  .vl-brand__logo { width: 40px; height: 40px; }
+  .vl-header.is-stuck .vl-brand__logo { width: 36px; height: 36px; }
+  .vl-brand__name { font-size: 1rem; }
+  .vl-brand__tag { display: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   PROSE — long-form text (page content, blog posts, reading samples)
+   ══════════════════════════════════════════════════════════════════════ */
+.vl-prose {
+  max-width: 72ch;
+  margin-inline: auto;
+}
+.vl-prose > * + * { margin-top: 1.35em; }
+.vl-prose h2,
+.vl-prose h3,
+.vl-prose h4 {
+  font-family: var(--vl-font-display);
+  color: var(--vl-ivory);
+  line-height: 1.22;
+  margin-top: 2.2em;
+}
+.vl-prose h2 { font-size: clamp(1.7rem, 3.2vw, 2.5rem); }
+.vl-prose h3 { font-size: clamp(1.3rem, 2.4vw, 1.7rem); }
+.vl-prose p { color: var(--vl-ivory-dim); line-height: 1.78; }
+.vl-prose a {
+  color: var(--vl-gold);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color .25s var(--vl-ease-out);
+}
+.vl-prose a:hover { color: var(--vl-ivory); }
+.vl-prose img { border-radius: var(--vl-radius); max-width: 100%; height: auto; }
+.vl-prose blockquote {
+  margin-inline: 0;
+  padding-left: 26px;
+  border-left: 2px solid var(--vl-gold);
+  font-family: var(--vl-font-quote);
+  font-style: italic;
+  font-size: 1.24rem;
+  color: var(--vl-ivory);
+}
+.vl-prose ul,
+.vl-prose ol { color: var(--vl-ivory-dim); padding-left: 1.2em; }
+.vl-prose li + li { margin-top: .55em; }
+.vl-prose hr { border: 0; border-top: 1px solid var(--vl-line); margin-block: 2.6em; }
+.vl-prose > *:first-child { margin-top: 0; }

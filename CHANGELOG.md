@@ -7,6 +7,97 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+The motion layer, the 3D product rail and the sticky-shrink header.
+
+### Added
+
+#### The client edition — Christiana Ciocan
+- A complete second design edition that reproduces the client's approved
+  design: *Imperiul Umbrelor*, the standalone titles, the reviews, the
+  journal, the vault (cart) and the navigation overlay.
+- `assets/css/client.css` — the client design system (`--cl-*` tokens):
+  the shell, the header, the overlay, the vault, the welcome panel, the
+  author block, the three gateways, the book rail, the standalone grid,
+  the reviews, the journal, the future-projects block and the contact form.
+- `assets/js/client-data.js` — the catalogue: 4 series books, 2 standalone
+  titles, 16 named reviews, 3 journal posts, the author bio and the
+  contact details.
+- `assets/js/client.js` — the behaviour: the draggable rail, the vault
+  (persisted in `localStorage`), the overlay, the review renderer with a
+  star picker, and the contact form handler.
+- `inc/client-shortcodes.php` — four shortcodes so the client layout can be
+  dropped into any WordPress page:
+  `[nocturne_client_gates]`, `[nocturne_client_series]`,
+  `[nocturne_client_standalone]`, `[nocturne_client_journal]`.
+- `assets/img/client/` — the client's eight source images. Three arrive as
+  open-book spreads; the front cover is cropped out and the original is
+  preserved as `spread-*.jpg`.
+- The home page (`front-page.php`) and the header now carry the client's
+  navigation overlay and the full client layout.
+
+#### Effects system (`assets/css/effects.css`, `assets/js/effects.js`)
+- A **self-contained, dependency-free** motion layer. No library, no build
+  step, nothing to install — add an attribute and the effect runs.
+- **Reveal on scroll** driven by `IntersectionObserver`. Fourteen effects:
+  `fade`, `fade-up`, `fade-down`, `fade-left`, `fade-right`, `zoom-in`,
+  `zoom-out`, `slide-up`, `slide-down`, `blur-in`, `flip-y`, `reveal-mask`,
+  `text-entrance`, `letter-stagger`.
+  - `data-delay` and `data-duration` tune the timing per element
+  - `data-group="90"` cascades a group of cards, 90 ms apart
+- **The 3D book cover** — a real three-dimensional object. The cover turns
+  towards the reader on hover, and the striped page block appears along the
+  fore-edge. Sized with `--book-w`, `--book-h` and `--book-depth`.
+  - `data-tilt` adds pointer tracking so the cover leans towards the cursor
+- **The product rail** — a horizontal carousel with no library behind it.
+  The arrows step one whole card at a time and disable themselves at each
+  end; the track also responds to drag and to the keyboard.
+- **The split hero** — a 3D cover beside a looping video. The cover swaps
+  when the video changes; only the visible slide plays.
+- **Sticky-shrink header** — the bar condenses from 96 px to 70 px after
+  10 px of scroll and the logo swaps to a smaller lockup.
+- **Ticker** — a slow marquee of accolades with a seamless loop.
+- **Magnetic buttons** (`data-magnetic`) and **scroll parallax**
+  (`data-parallax`).
+- **`.vl-prose`** — long-form text styling for pages, posts and reading
+  samples.
+- Every effect respects `prefers-reduced-motion`: reveals appear at once,
+  the ticker stops and the tilt is disabled.
+
+#### Shortcodes
+- `[nocturne_showcase]` — the 3D product rail, built from your real
+  WooCommerce products and their featured images.
+- `[nocturne_split_hero]` — the cover-and-video hero. One slide per line:
+  `Image | Video | Title | Excerpt | Cover`.
+- `[nocturne_ticker]` — the marquee of accolades.
+
+#### Theme
+- `front-page.php` — a landing layout that assembles the split hero, the
+  3D rail and the ticker out of the theme's own components.
+- Customizer field **Split hero slides**, so the split hero can be filled in
+  from the admin without touching a shortcode.
+- The header now carries a trust badge, a search form and pill-style
+  navigation with dropdown panels.
+
+### Fixed
+- `scripts/build-theme.sh` no longer appends to a stale archive, and the
+  package check no longer trips over a closed pipe (`grep -q` closing the
+  pipe early made `unzip` exit non-zero under `set -o pipefail`).
+
+### Changed
+- The old `[data-reveal]` markup was folded into the unified `[data-animate]`
+  system. The legacy attribute still works, so older pages do not break.
+- The header no longer hides on scroll. It condenses instead, which is the
+  behaviour shoppers expect and keeps the navigation reachable.
+- `scripts/test_theme.py` now excludes the product rail, the ticker and
+  inactive split-hero slides from the overflow check — their content is
+  meant to sit outside the viewport.
+- `scripts/test_bleed.py` no longer captures full-page screenshots; the page
+  is now long enough to exceed Chromium's texture limit.
+
+---
+
 ## [1.0.0] — 2026-11-05
 
 The first public release. Built from a real freelance contest brief

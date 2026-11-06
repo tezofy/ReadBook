@@ -5,13 +5,9 @@
 		<div class="vl-footer__grid">
 
 			<div>
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="vl-brand">
-					<svg class="vl-brand__mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-						<circle cx="24" cy="24" r="22.5" stroke="#C9A227" stroke-width="1" opacity=".55"/>
-						<path d="M24 33c-4.5-2.6-7-6.2-7-9.9 0-3 2-5.3 4.6-5.3 1.7 0 3 1 3.7 2.4.7-1.4 2-2.4 3.7-2.4 2.6 0 4.6 2.3 4.6 5.3 0 3.7-2.5 7.3-7 9.9z" fill="#8A1F2E"/>
-						<path d="M24 33V17" stroke="#C9A227" stroke-width="1.1" stroke-linecap="round"/>
-						<path d="M24 24.5 20 21M24 21l4-3.5" stroke="#C9A227" stroke-width=".9" stroke-linecap="round"/>
-					</svg>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="vl-brand"><span class="vl-brand__crest">
+					<img src="<?php echo esc_url( NOCTURNE_URI . '/assets/img/client/logo-ci-transparent.png' ); ?>" alt="">
+				</span>
 					<span class="vl-brand__text">
 						<span class="vl-brand__name"><?php bloginfo( 'name' ); ?></span>
 						<span class="vl-brand__tag"><?php echo esc_html( get_bloginfo( 'description', 'display' ) ); ?></span>

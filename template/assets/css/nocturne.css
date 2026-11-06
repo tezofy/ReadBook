@@ -345,93 +345,173 @@ hr { border: 0; border-top: 1px solid var(--vl-line); margin: var(--vl-s-8) 0; }
 .vl-link-arrow:hover { color: var(--vl-gold-lt); }
 
 /* --------------------------------------------------------------------------
-   6. HEADER / NAVIGATION
+   6. HEADER / NAVIGATION — sticky-shrink
+   The rules here mirror template/assets/css/effects.css so the static preview
+   and the WordPress theme look identical.
    -------------------------------------------------------------------------- */
 .vl-header {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 900;
-  height: var(--vl-header-h);
   display: flex;
   align-items: center;
-  transition: background .4s var(--vl-ease), backdrop-filter .4s var(--vl-ease), border-color .4s var(--vl-ease), height .4s var(--vl-ease);
+  background: linear-gradient(180deg, rgba(11,10,13,.96) 0%, rgba(11,10,13,.88) 60%, rgba(11,10,13,0) 100%);
   border-bottom: 1px solid transparent;
-}
-.vl-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(11,10,13,.78), rgba(11,10,13,0));
-  opacity: 1;
-  transition: opacity .4s var(--vl-ease);
-  pointer-events: none;
+  transition: background .45s var(--vl-ease), backdrop-filter .4s var(--vl-ease),
+              border-color .45s var(--vl-ease), transform .45s var(--vl-ease);
 }
 .vl-header.is-stuck {
-  height: 64px;
-  background: rgba(11,10,13,.86);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  background: rgba(11,10,13,.985);
   border-bottom-color: var(--vl-line);
+  box-shadow: 0 10px 34px rgba(0,0,0,.55);
 }
-.vl-header.is-stuck::before { opacity: 0; }
 .vl-header.is-hidden { transform: translateY(-102%); }
-.vl-header { transition: transform .45s var(--vl-ease), background .4s var(--vl-ease), height .4s var(--vl-ease); }
 
 .vl-header__inner {
   width: 100%;
-  max-width: 1520px;
+  max-width: 1400px;
   margin-inline: auto;
   padding-inline: var(--vl-gutter);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--vl-s-5);
+  gap: clamp(12px, 2vw, 26px);
+  height: 96px;
+  transition: height .35s var(--vl-ease);
 }
+.vl-header.is-stuck .vl-header__inner { height: 70px; }
 
 /* Wordmark */
-.vl-brand { display: flex; align-items: center; gap: 12px; color: var(--vl-ivory); }
+.vl-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--vl-ivory);
+  flex: 0 0 auto;
+}
 .vl-brand:hover { color: var(--vl-ivory); }
-.vl-brand__mark { width: 34px; height: 34px; flex: none; }
-.vl-brand__text { display: flex; flex-direction: column; line-height: 1; }
+.vl-brand__logo {
+  display: inline-flex;
+  width: 52px;
+  height: 52px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(201,162,39,.28);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, rgba(138,31,46,.34), transparent 70%);
+  transition: width .35s var(--vl-ease), height .35s var(--vl-ease);
+}
+.vl-header.is-stuck .vl-brand__logo { width: 38px; height: 38px; }
+.vl-brand__mark { width: 74%; height: 74%; flex: none; }
+.vl-brand__text { display: flex; flex-direction: column; line-height: 1.1; }
 .vl-brand__name {
   font-family: var(--vl-font-display);
-  font-size: 1.34rem;
+  font-size: 1.32rem;
   font-weight: 700;
-  letter-spacing: .17em;
+  letter-spacing: .12em;
   text-transform: uppercase;
+  transition: font-size .35s var(--vl-ease);
 }
+.vl-header.is-stuck .vl-brand__name { font-size: 1.02rem; }
 .vl-brand__tag {
-  font-size: .52rem;
-  letter-spacing: .42em;
+  font-size: .58rem;
+  letter-spacing: .3em;
   text-transform: uppercase;
-  color: var(--vl-gold);
+  color: var(--vl-muted);
   margin-top: 4px;
+  max-height: 20px;
+  transition: opacity .3s var(--vl-ease), max-height .3s var(--vl-ease);
 }
+.vl-header.is-stuck .vl-brand__tag { opacity: 0; max-height: 0; margin-top: 0; }
 
-.vl-nav { display: flex; align-items: center; gap: clamp(20px, 2.4vw, 38px); }
+/* Trust badge */
+.vl-header__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid rgba(201,162,39,.3);
+  border-radius: 999px;
+  background: rgba(201,162,39,.07);
+  color: var(--vl-gold);
+  font-size: .58rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .3s var(--vl-ease), border-color .3s var(--vl-ease);
+}
+.vl-header__badge:hover { background: rgba(201,162,39,.14); border-color: rgba(201,162,39,.55); }
+.vl-header__badge svg { width: 16px; height: 16px; flex: 0 0 auto; }
+@media (max-width: 1180px) { .vl-header__badge { display: none; } }
+
+/* Pill navigation */
+.vl-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-inline: auto;
+}
 .vl-nav__link {
   position: relative;
-  font-size: .74rem;
+  display: inline-block;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: .66rem;
   font-weight: 500;
-  letter-spacing: .16em;
+  letter-spacing: .2em;
   text-transform: uppercase;
-  color: var(--vl-ivory-dim);
-  padding-block: 6px;
+  color: var(--vl-ivory);
+  white-space: nowrap;
+  transition: color .3s var(--vl-ease), background .3s var(--vl-ease);
 }
+.vl-nav__link:hover,
+.vl-nav__link.is-active { color: var(--vl-ivory); background: rgba(201,162,39,.12); }
+.vl-nav__link.is-active { color: var(--vl-gold); }
 .vl-nav__link::after {
   content: '';
   position: absolute;
-  left: 0; bottom: 0;
-  width: 100%; height: 1px;
+  left: 50%;
+  bottom: 4px;
+  width: 0;
+  height: 1px;
   background: var(--vl-gold);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform .38s var(--vl-ease);
+  transform: translateX(-50%);
+  transition: width .35s var(--vl-ease);
 }
-.vl-nav__link:hover { color: var(--vl-ivory); }
 .vl-nav__link:hover::after,
-.vl-nav__link.is-active::after { transform: scaleX(1); transform-origin: left; }
-.vl-nav__link.is-active { color: var(--vl-gold); }
+.vl-nav__link.is-active::after { width: calc(100% - 36px); }
+
+/* Search */
+.vl-search { position: relative; display: inline-flex; align-items: center; }
+.vl-search__icon {
+  position: absolute;
+  left: 12px;
+  width: 15px;
+  height: 15px;
+  color: var(--vl-muted);
+  pointer-events: none;
+}
+.vl-search input {
+  width: 190px;
+  padding: 9px 14px 9px 34px;
+  border: 1px solid var(--vl-line);
+  border-radius: 999px;
+  background: rgba(255,255,255,.03);
+  color: var(--vl-ivory);
+  font-family: inherit;
+  font-size: .68rem;
+  letter-spacing: .08em;
+  transition: width .4s var(--vl-ease), border-color .3s, background .3s;
+}
+.vl-search input::placeholder { color: var(--vl-muted); }
+.vl-search input:focus {
+  width: 240px;
+  outline: none;
+  border-color: rgba(201,162,39,.5);
+  background: rgba(255,255,255,.06);
+}
+@media (max-width: 1320px) { .vl-search input { width: 150px; } }
+@media (max-width: 1100px) { .vl-search { display: none; } }
 
 .vl-header__actions { display: flex; align-items: center; gap: 14px; }
 
@@ -492,6 +572,16 @@ hr { border: 0; border-top: 1px solid var(--vl-line); margin: var(--vl-s-8) 0; }
 .vl-burger.is-open span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
 .vl-burger.is-open span:nth-child(2) { opacity: 0; }
 .vl-burger.is-open span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+
+@media (max-width: 900px) {
+  .vl-header__inner { height: 70px; }
+  .vl-header.is-stuck .vl-header__inner { height: 64px; }
+  .vl-brand__logo { width: 40px; height: 40px; }
+  .vl-header.is-stuck .vl-brand__logo { width: 36px; height: 36px; }
+  .vl-brand__name { font-size: 1rem; }
+  .vl-brand__tag { display: none; }
+}
 
 /* --------------------------------------------------------------------------
    7. THE HERO — FULL-BLEED MEDIA SLIDER  ⭐ KEY DELIVERABLE
@@ -1161,16 +1251,14 @@ hr { border: 0; border-top: 1px solid var(--vl-line); margin: var(--vl-s-8) 0; }
 /* --------------------------------------------------------------------------
    15. REVEAL ANIMATIONS
    -------------------------------------------------------------------------- */
+/* Reveal-on-scroll now lives in effects.css (the unified effects engine).
+   Kept here for backwards compatibility with older markup. */
 [data-reveal] {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity .9s var(--vl-ease-out), transform .9s var(--vl-ease-out);
 }
 [data-reveal].is-in { opacity: 1; transform: none; }
-[data-reveal-delay="1"] { transition-delay: .09s; }
-[data-reveal-delay="2"] { transition-delay: .18s; }
-[data-reveal-delay="3"] { transition-delay: .27s; }
-[data-reveal-delay="4"] { transition-delay: .36s; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1202,28 +1290,40 @@ hr { border: 0; border-top: 1px solid var(--vl-line); margin: var(--vl-s-8) 0; }
   .vl-burger { display: block; }
   .vl-nav {
     position: fixed;
-    inset: 0 0 0 auto;
+    top: 64px;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    height: auto;
+    /* The base rule centres the nav with auto margins; that would collapse
+       a fixed element that has both a top and a bottom offset. */
+    margin: 0;
     width: min(86vw, 360px);
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 4px;
-    padding: 90px 34px 40px;
+    padding: 34px;
+    overflow-y: auto;
     background: rgba(11,10,13,.97);
     backdrop-filter: blur(20px);
     border-left: 1px solid var(--vl-line);
     transform: translateX(100%);
     transition: transform .48s var(--vl-ease);
-    z-index: 950;
+    /* Sits above the header's own stacking context so the drawer is not
+       clipped, but the header's action buttons are lifted above it. */
+    z-index: 890;
   }
+  /* Keep the close button reachable while the drawer is open. */
+  .vl-header__actions { position: relative; z-index: 960; }
   .vl-nav.is-open { transform: none; }
   .vl-nav__link { font-size: 1rem; padding-block: 12px; }
   .vl-nav__backdrop {
-    position: fixed; inset: 0;
+    position: fixed; inset: 64px 0 0 0;
     background: rgba(0,0,0,.62);
     opacity: 0; visibility: hidden;
     transition: opacity .4s var(--vl-ease), visibility .4s;
-    z-index: 940;
+    z-index: 880;
   }
   .vl-nav__backdrop.is-open { opacity: 1; visibility: visible; }
   .vl-header__actions .vl-cart span:not(.vl-cart__count) { display: none; }
